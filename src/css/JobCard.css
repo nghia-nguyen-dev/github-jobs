@@ -1,0 +1,21 @@
+.JobCard {
+	display: flex;
+	padding: 12px;
+	background-color: white;
+	margin-bottom: 32px;
+	box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.05);
+	border-radius: 4px;
+    height: 114px;
+}
+
+.JobCard__company-logo {
+	width: 90px;
+	border-radius: 4px;
+	margin-right: 16px;
+}
+
+.JobCard__secondary-info {
+	margin-left: auto;
+	display: flex;
+	align-self: end;
+}
