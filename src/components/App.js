@@ -1,5 +1,5 @@
 import { useState, useEffect } from "react";
-import globeIcon from "assets/icons/globe.svg"
+import globeIcon from "assets/icons/globe.svg";
 
 export default () => {
 	return (
@@ -78,11 +78,15 @@ const JobsList = () => {
 };
 
 const Search = () => {
+	const [searchTerm, setSearchTerm] = useState("");
+    console.log(searchTerm)
 	return (
 		<div className="Search">
 			<div className="Search__input-container">
-                <img className="Search__globe-icon" src={globeIcon}/>
+				<img className="Search__globe-icon" src={globeIcon} />
 				<input
+                    onChange={(e) => setSearchTerm(e.target.value)}
+					value={searchTerm}
 					className="Search__input"
 					placeholder="Title, companies, expertise or benefits"
 				></input>
