@@ -1,0 +1,38 @@
+.Search {
+    display: flex;
+    width: 65%;
+    height: 55px;
+    border-radius: 4px;
+    background-color: white;
+    padding: 4px;
+}
+
+.Search__input-container {
+    flex: 1;
+    display: flex;
+    align-items: center;
+    padding-left: 16px;
+}
+
+.Search__globe-icon {
+    fill: #B9BDCF;
+}
+
+.Search__input {
+    color: #B9BDCF;
+    font-size: 12px;
+    width: 100%;
+    border: none;
+    margin-left: 10px;
+}
+
+.Search__btn {
+    font-size: 15px;
+    font-weight: bold;
+    color: white;
+    border: none;
+    height: 100%;
+    border-radius: 4px;
+    width: 146px;
+    background: #1E86FF;
+}
