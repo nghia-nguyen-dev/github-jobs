@@ -9,6 +9,10 @@
 	color: #334680;
 }
 
+.JobCard:hover {
+	cursor: pointer;
+}
+
 .JobCard__company-logo {
 	width: 90px;
 	object-fit: contain;
@@ -45,4 +49,18 @@
 .JobCard__secondary-info,
 .JobCard__type {
 	font-size: 12px;
+}
+
+.JobCard__location,
+.JobCard__date {
+	margin-right: 20px;
+	display: flex;
+	align-items: center;
+}
+
+.JobCard__globe-icon,
+.JobCard__work-icon {
+	margin-right: 5px;
+	height: 15px;
+	width: 15px;
 }

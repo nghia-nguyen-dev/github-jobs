@@ -1,5 +1,6 @@
 import { useState, useEffect, useRef } from "react";
 import globeIcon from "assets/icons/globe.svg";
+import workIcon from "assets/icons/work.svg";
 import * as R from "ramda";
 import mockData from "utils/mockData.json";
 import chevronLeft from "assets/icons/chevron_left.svg";
@@ -122,8 +123,20 @@ const JobsList = ({ jobs, setJobs, currentPage }) => {
 						<p className="JobCard__type">{type}</p>
 					</div>
 					<div className="JobCard__secondary-info">
-						<p>{location}</p>
-						<p>{created_at}</p>
+						<div className="JobCard__location">
+							<img
+								className="JobCard__globe-icon"
+								src={globeIcon}
+							/>
+							<p>{location}</p>
+						</div>
+						<div className="JobCard__date">
+							<img
+								className="JobCard__work-icon"
+								src={workIcon}
+							/>
+							<p>{created_at}</p>
+						</div>
 					</div>
 				</li>
 			);
@@ -134,12 +147,9 @@ const JobsList = ({ jobs, setJobs, currentPage }) => {
 };
 
 const PageNav = ({ jobs, currentPage, setCurrentPage }) => {
-	const n1 = useRef(0)
-	const n2 = useRef(0)
-
 	const handleNext = () => {
 		if (currentPage === jobs.length - 1) {
-			console.log(`last page sir!`)
+			console.log(`last page sir!`);
 			return;
 		}
 		setCurrentPage((prev) => prev + 1);
@@ -147,26 +157,38 @@ const PageNav = ({ jobs, currentPage, setCurrentPage }) => {
 
 	const handlePrev = () => {
 		if (currentPage === 0) {
-			console.log(`first page sir!`)
+			console.log(`first page sir!`);
 			return;
 		}
 		setCurrentPage((prev) => prev - 1);
 	};
 
-	console.log(currentPage)
+	const handleClick = (index) => {
+		setCurrentPage(index);
+	};
+
+	const PageBlocks = jobs.map((job, index) => {
+		const isActive = index === currentPage ? "active" : "";
+
+		return (
+			<div
+				className={`PageNav__number ${isActive}`}
+				onClick={() => handleClick(index)}
+				key={index}
+			>
+				<span>{index + 1}</span>
+			</div>
+		);
+	});
+
 	return (
 		<div className="PageNav">
-			<img src={chevronLeft} className="PageNav__icon" onClick={handlePrev}/>
-			<div className="PageNav__number">
-				<span ref={n1}>{currentPage > jobs.length - 3 ? n1.current.textContent :currentPage + 1}</span>
-			</div>
-			<div className="PageNav__number">
-				<span ref={n2}>{currentPage > jobs.length - 3 ? n2.current.textContent :currentPage + 2}</span>
-			</div>
-			<img src={dots} className="PageNav__icon" />
-			<div className="PageNav__number">
-				<span>{jobs.length}</span>
-			</div>
+			<img
+				src={chevronLeft}
+				className="PageNav__icon"
+				onClick={handlePrev}
+			/>
+			{PageBlocks}
 			<img
 				src={chevronRight}
 				className="PageNav__icon"

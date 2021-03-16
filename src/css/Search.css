@@ -32,3 +32,12 @@
     width: 146px;
     background: #1E86FF;
 }
+
+.Search__btn:hover {
+    cursor: pointer;
+}
+
+.Search__globe-icon {
+    height: 15px;
+    width: 15px;
+}

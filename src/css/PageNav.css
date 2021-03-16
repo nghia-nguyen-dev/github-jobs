@@ -1,6 +1,8 @@
 .PageNav {
 	display: flex;
 	color: #b9bdcf;
+	width: max-content;
+	margin-left: auto;
 }
 
 .PageNav > * {
@@ -8,18 +10,24 @@
 	border: 1px solid #b7bcce;
 	width: 36px;
 	height: 36px;
-    margin-right: 12px;
+	margin-right: 12px;
 }
 
 .PageNav > *:hover {
-    cursor: pointer;
-    color: #334680;
+	cursor: pointer;
+	color: #334680;
 	border: 1px solid #334680;
 }
 
 .PageNav__number {
-    font-size: 12px;
+	font-size: 12px;
 	display: flex;
 	align-items: center;
 	justify-content: center;
+}
+
+.PageNav__number.active {
+	background-color: #1E86FF;
+	color: white;
+	font-weight: bold;
 }
