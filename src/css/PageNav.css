@@ -1,0 +1,23 @@
+.PageNav {
+	display: flex;
+	color: #b9bdcf;
+}
+
+.PageNav > * {
+	border-radius: 4px;
+	border: 1px solid #b7bcce;
+	width: 36px;
+	height: 36px;
+    margin-right: 12px;
+}
+
+.PageNav > *:hover {
+    cursor: pointer;
+}
+
+.PageNav__number {
+    font-size: 12px;
+	display: flex;
+	align-items: center;
+	justify-content: center;
+}

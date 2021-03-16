@@ -2,6 +2,9 @@ import { useState, useEffect } from "react";
 import globeIcon from "assets/icons/globe.svg";
 import * as R from "ramda";
 import mockData from "utils/mockData.json";
+import chevronLeft from 'assets/icons/chevron_left.svg'
+import chevronRight from 'assets/icons/chevron_right.svg'
+import dots from 'assets/icons/dots.svg'
 
 export default () => {
 	return (
@@ -9,6 +12,7 @@ export default () => {
 			<h1>Github Jobs</h1>
 			<Banner />
 			<JobsList />
+			<PageNav />
 		</div>
 	);
 };
@@ -89,9 +93,10 @@ const JobsList = () => {
 		// 		// isLoading: false
 		// 	})
 		// 	.catch((err) => console.log(err));
-		setIsLoading(true)
+
+		setIsLoading(true);
 		R.pipe(R.splitEvery(config.jobsPerPage), setJobs)(mockData);
-		setIsLoading(false)
+		setIsLoading(false);
 	}, []);
 
 	const renderedList = jobs[currentPage]?.map(
@@ -99,10 +104,10 @@ const JobsList = () => {
 			return (
 				<li className="JobCard" key={id}>
 					<img className="JobCard__company-logo" src={company_logo} />
-					<div>
-						<p>{company}</p>
+					<div className="JobCard__primary-info">
+						<p className="JobCard__company">{company}</p>
 						<p>{title}</p>
-						<p>{type}</p>
+						<p className="JobCard__type">{type}</p>
 					</div>
 					<div className="JobCard__secondary-info">
 						<p>{location}</p>
@@ -114,6 +119,19 @@ const JobsList = () => {
 	);
 
 	return <ul>{renderedList}</ul>;
+};
+
+const PageNav = ({currentPage, jobs}) => {
+	return (
+		<div className="PageNav">
+			<img src={chevronLeft} className="PageNav__icon" />
+			<div className="PageNav__number"><span>1</span></div>
+			<div className="PageNav__number"><span>2</span></div>
+			<img src={dots} className="PageNav__icon" />
+			<div className="PageNav__number"><span>{jobs.length}</span></div>
+			<img src={chevronRight} className="PageNav__icon" />
+		</div>
+	);
 };
 
 const Search = () => {

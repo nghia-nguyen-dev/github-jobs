@@ -6,6 +6,7 @@
 	box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.05);
 	border-radius: 4px;
 	height: 114px;
+	color: #334680;
 }
 
 .JobCard__company-logo {
@@ -16,8 +17,32 @@
 	margin-right: 16px;
 }
 
+.JobCard__primary-info {
+	display: flex;
+	flex-direction: column;
+}
+
 .JobCard__secondary-info {
+	color: #B9BDCF;
 	margin-left: auto;
 	display: flex;
 	align-self: end;
+}
+
+.JobCard__type {
+	margin-top: auto;
+	padding: 6px 8px;
+	border: 1px solid #334680;
+	border-radius: 4px;
+	width: max-content;
+}
+
+.JobCard__company {
+	font-weight: bold;
+}
+
+.JobCard__company,
+.JobCard__secondary-info,
+.JobCard__type {
+	font-size: 12px;
 }
