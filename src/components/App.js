@@ -1,4 +1,4 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect, useRef } from "react";
 import globeIcon from "assets/icons/globe.svg";
 import * as R from "ramda";
 import mockData from "utils/mockData.json";
@@ -101,13 +101,16 @@ const Jobs = () => {
 	return (
 		<div>
 			<JobsList jobs={jobs} setJobs={setJobs} currentPage={currentPage} />
-			<PageNav jobs={jobs} setCurrentPage={setCurrentPage} />
+			<PageNav
+				jobs={jobs}
+				currentPage={currentPage}
+				setCurrentPage={setCurrentPage}
+			/>
 		</div>
 	);
 };
 
 const JobsList = ({ jobs, setJobs, currentPage }) => {
-
 	const renderedList = jobs[currentPage]?.map(
 		({ company_logo, company, title, type, location, created_at, id }) => {
 			return (
@@ -130,21 +133,45 @@ const JobsList = ({ jobs, setJobs, currentPage }) => {
 	return <ul>{renderedList}</ul>;
 };
 
-const PageNav = ({ jobs, setCurrentPage }) => {
+const PageNav = ({ jobs, currentPage, setCurrentPage }) => {
+	const n1 = useRef(0)
+	const n2 = useRef(0)
+
+	const handleNext = () => {
+		if (currentPage === jobs.length - 1) {
+			console.log(`last page sir!`)
+			return;
+		}
+		setCurrentPage((prev) => prev + 1);
+	};
+
+	const handlePrev = () => {
+		if (currentPage === 0) {
+			console.log(`first page sir!`)
+			return;
+		}
+		setCurrentPage((prev) => prev - 1);
+	};
+
+	console.log(currentPage)
 	return (
 		<div className="PageNav">
-			<img src={chevronLeft} className="PageNav__icon" />
+			<img src={chevronLeft} className="PageNav__icon" onClick={handlePrev}/>
 			<div className="PageNav__number">
-				<span>1</span>
+				<span ref={n1}>{currentPage > jobs.length - 3 ? n1.current.textContent :currentPage + 1}</span>
 			</div>
 			<div className="PageNav__number">
-				<span>2</span>
+				<span ref={n2}>{currentPage > jobs.length - 3 ? n2.current.textContent :currentPage + 2}</span>
 			</div>
 			<img src={dots} className="PageNav__icon" />
 			<div className="PageNav__number">
 				<span>{jobs.length}</span>
 			</div>
-			<img src={chevronRight} className="PageNav__icon" />
+			<img
+				src={chevronRight}
+				className="PageNav__icon"
+				onClick={handleNext}
+			/>
 		</div>
 	);
 };
