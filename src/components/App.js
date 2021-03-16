@@ -8,36 +8,22 @@ import chevronRight from "assets/icons/chevron_right.svg";
 import dots from "assets/icons/dots.svg";
 
 export default () => {
-	return (
-		<div className="App">
+	const [currentJob, setCurrentJob] = useState({});
+	const renderView = R.isEmpty(currentJob) ? (
+		<>
 			<h1>Github Jobs</h1>
 			<Banner />
-			<Jobs />
-		</div>
+			<JobsContainer setCurrentJob={setCurrentJob} />
+		</>
+	) : (
+		<JobPage currentJob={currentJob}/>
 	);
+
+	return <div className="App">{renderView}</div>;
 };
 
-const JobCard = () => {
-	return (
-		<div>
-			<img />
-			<div>
-				<p>Kasisto</p>
-				<p>Front-End Software Engineer</p>
-				<p>Full time</p>
-			</div>
-			<div>
-				<div>
-					<img />
-					<p>New York</p>
-				</div>
-				<div>
-					<img />
-					<p>5 days ago</p>
-				</div>
-			</div>
-		</div>
-	);
+const JobPage = () => {
+	return <div>Job Page</div>;
 };
 
 const PostDate = () => {
@@ -72,7 +58,7 @@ const Location = () => {
 	);
 };
 
-const Jobs = () => {
+const JobsContainer = ({ setCurrentJob }) => {
 	const [jobs, setJobs] = useState([]); // chunked into groups of 5
 	const [currentPage, setCurrentPage] = useState(0);
 	const [isLoading, setIsLoading] = useState(false); // anthing that fetchs data will need loading state
@@ -99,9 +85,14 @@ const Jobs = () => {
 		setIsLoading(false);
 	}, []);
 
+	// <JobsList jobs={jobs} setJobs={setJobs} currentPage={currentPage} />
+	const renderedList = jobs[currentPage]?.map((job) => {
+		return <JobCard job={job} setCurrentJob={setCurrentJob} />;
+	});
+
 	return (
-		<div>
-			<JobsList jobs={jobs} setJobs={setJobs} currentPage={currentPage} />
+		<div className="JobsContainer">
+			<JobsList>{renderedList}</JobsList>
 			<PageNav
 				jobs={jobs}
 				currentPage={currentPage}
@@ -111,39 +102,35 @@ const Jobs = () => {
 	);
 };
 
-const JobsList = ({ jobs, setJobs, currentPage }) => {
-	const renderedList = jobs[currentPage]?.map(
-		({ company_logo, company, title, type, location, created_at, id }) => {
-			return (
-				<li className="JobCard" key={id}>
-					<img className="JobCard__company-logo" src={company_logo} />
-					<div className="JobCard__primary-info">
-						<p className="JobCard__company">{company}</p>
-						<p>{title}</p>
-						<p className="JobCard__type">{type}</p>
-					</div>
-					<div className="JobCard__secondary-info">
-						<div className="JobCard__location">
-							<img
-								className="JobCard__globe-icon"
-								src={globeIcon}
-							/>
-							<p>{location}</p>
-						</div>
-						<div className="JobCard__date">
-							<img
-								className="JobCard__work-icon"
-								src={workIcon}
-							/>
-							<p>{created_at}</p>
-						</div>
-					</div>
-				</li>
-			);
-		}
-	);
+const JobsList = ({ children }) => {
+	return <ul>{children}</ul>;
+};
 
-	return <ul>{renderedList}</ul>;
+const JobCard = ({
+	setCurrentJob,
+	job: { company_logo, company, title, type, location, created_at, id },
+	job,
+}) => {
+	return (
+		<li className="JobCard" key={id} onClick={() => setCurrentJob(job)}>
+			<img className="JobCard__company-logo" src={company_logo} />
+			<div className="JobCard__primary-info">
+				<p className="JobCard__company">{company}</p>
+				<p>{title}</p>
+				<p className="JobCard__type">{type}</p>
+			</div>
+			<div className="JobCard__secondary-info">
+				<div className="JobCard__location">
+					<img className="JobCard__globe-icon" src={globeIcon} />
+					<p>{location}</p>
+				</div>
+				<div className="JobCard__date">
+					<img className="JobCard__work-icon" src={workIcon} />
+					<p>{created_at}</p>
+				</div>
+			</div>
+		</li>
+	);
 };
 
 const PageNav = ({ jobs, currentPage, setCurrentPage }) => {
