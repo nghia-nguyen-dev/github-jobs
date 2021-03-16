@@ -1,6 +1,7 @@
 import { useState, useEffect } from "react";
 import globeIcon from "assets/icons/globe.svg";
 import * as R from "ramda";
+import mockData from "utils/mockData.json";
 
 export default () => {
 	return (
@@ -70,27 +71,33 @@ const Location = () => {
 const JobsList = () => {
 	const [jobs, setJobs] = useState([]); // chunked into groups of 5
 	const [currentPage, setCurrentPage] = useState(0);
-	const [isLoadig, setIsLoading] = useState(false); // anthing that fetchs data will need loading state
+	const [isLoading, setIsLoading] = useState(false); // anthing that fetchs data will need loading state
 
-	const allOrigins = `https://api.allorigins.win/raw?url=`;
+	const CORS = `https://cors-anywhere.herokuapp.com/`;
 	const config = {
 		jobsPerPage: 5,
 	};
 
 	useEffect(() => {
-		fetch(
-			`${allOrigins}https://jobs.github.com/positions.json?page=1&search=code`
-		)
-			.then((res) => res.json())
-			.then((data) => {
-				R.pipe(R.splitEvery(config.jobsPerPage), setJobs)(data);
-			});
+		// // isLoading: true
+		// fetch(
+		// 	`${CORS}https://jobs.github.com/positions.json?search=developer`
+		// )
+		// 	.then((res) => res.json())
+		// 	.then((data) => {
+		// 		R.pipe(R.splitEvery(config.jobsPerPage), setJobs)(data);
+		// 		// isLoading: false
+		// 	})
+		// 	.catch((err) => console.log(err));
+		setIsLoading(true)
+		R.pipe(R.splitEvery(config.jobsPerPage), setJobs)(mockData);
+		setIsLoading(false)
 	}, []);
 
 	const renderedList = jobs[currentPage]?.map(
-		({ company_logo, company, title, type, location, created_at }) => {
+		({ company_logo, company, title, type, location, created_at, id }) => {
 			return (
-				<li className="JobCard">
+				<li className="JobCard" key={id}>
 					<img className="JobCard__company-logo" src={company_logo} />
 					<div>
 						<p>{company}</p>
@@ -106,7 +113,6 @@ const JobsList = () => {
 		}
 	);
 
-	console.log(jobs);
 	return <ul>{renderedList}</ul>;
 };
 
