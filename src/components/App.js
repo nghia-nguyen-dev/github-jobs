@@ -2,17 +2,16 @@ import { useState, useEffect } from "react";
 import globeIcon from "assets/icons/globe.svg";
 import * as R from "ramda";
 import mockData from "utils/mockData.json";
-import chevronLeft from 'assets/icons/chevron_left.svg'
-import chevronRight from 'assets/icons/chevron_right.svg'
-import dots from 'assets/icons/dots.svg'
+import chevronLeft from "assets/icons/chevron_left.svg";
+import chevronRight from "assets/icons/chevron_right.svg";
+import dots from "assets/icons/dots.svg";
 
 export default () => {
 	return (
 		<div className="App">
 			<h1>Github Jobs</h1>
 			<Banner />
-			<JobsList />
-			<PageNav />
+			<Jobs />
 		</div>
 	);
 };
@@ -72,7 +71,7 @@ const Location = () => {
 	);
 };
 
-const JobsList = () => {
+const Jobs = () => {
 	const [jobs, setJobs] = useState([]); // chunked into groups of 5
 	const [currentPage, setCurrentPage] = useState(0);
 	const [isLoading, setIsLoading] = useState(false); // anthing that fetchs data will need loading state
@@ -99,6 +98,16 @@ const JobsList = () => {
 		setIsLoading(false);
 	}, []);
 
+	return (
+		<div>
+			<JobsList jobs={jobs} setJobs={setJobs} currentPage={currentPage} />
+			<PageNav jobs={jobs} setCurrentPage={setCurrentPage} />
+		</div>
+	);
+};
+
+const JobsList = ({ jobs, setJobs, currentPage }) => {
+
 	const renderedList = jobs[currentPage]?.map(
 		({ company_logo, company, title, type, location, created_at, id }) => {
 			return (
@@ -121,14 +130,20 @@ const JobsList = () => {
 	return <ul>{renderedList}</ul>;
 };
 
-const PageNav = ({currentPage, jobs}) => {
+const PageNav = ({ jobs, setCurrentPage }) => {
 	return (
 		<div className="PageNav">
 			<img src={chevronLeft} className="PageNav__icon" />
-			<div className="PageNav__number"><span>1</span></div>
-			<div className="PageNav__number"><span>2</span></div>
+			<div className="PageNav__number">
+				<span>1</span>
+			</div>
+			<div className="PageNav__number">
+				<span>2</span>
+			</div>
 			<img src={dots} className="PageNav__icon" />
-			<div className="PageNav__number"><span>{jobs.length}</span></div>
+			<div className="PageNav__number">
+				<span>{jobs.length}</span>
+			</div>
 			<img src={chevronRight} className="PageNav__icon" />
 		</div>
 	);
