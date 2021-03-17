@@ -7,6 +7,11 @@ import chevronLeft from "assets/icons/chevron_left.svg";
 import chevronRight from "assets/icons/chevron_right.svg";
 import dots from "assets/icons/dots.svg";
 
+const CORS = `https://cors-anywhere.herokuapp.com/`;
+const config = {
+	jobsPerPage: 5,
+};
+
 export default () => {
 	const [currentJob, setCurrentJob] = useState({});
 	const renderView = R.isEmpty(currentJob) ? (
@@ -36,10 +41,19 @@ const PostDate = () => {
 	);
 };
 
-const Fulltime = () => {
+const FullTime = ({ fullTime, setFullTime }) => {
+	const handleCheckbox = (e) => {
+		setFullTime(e.target.checked);
+	};
+
 	return (
 		<div>
-			<input type="checkbox" id="Fulltime" name="Fulltime" />
+			<input
+				type="checkbox"
+				id="Fulltime"
+				checked={fullTime}
+				onChange={handleCheckbox}
+			/>
 			<label for="Fulltime">Fulltime</label>
 		</div>
 	);
@@ -60,10 +74,26 @@ const Location = () => {
 const Controller = ({ setCurrentJob }) => {
 	const [jobs, setJobs] = useState([]); // chunked into groups of 5
 	const [currentPage, setCurrentPage] = useState(0);
+	const [pages, setPages] = useState([]);
+	const [fullTime, setFullTime] = useState(false);
 
-	const renderedList = jobs[currentPage]?.map((job) => {
+	useEffect(() => {
+		let temp = [...jobs];
+
+		// full time filter
+		if (fullTime) {
+			temp = temp.filter((job) => job.type === "Full Time");
+		}
+		// location filter
+
+		// output
+		R.pipe(R.splitEvery(config.jobsPerPage), setPages)(temp);
+	}, [jobs, fullTime]);
+
+	const renderedList = pages[currentPage]?.map((job) => {
 		return <JobCard key={job.id} job={job} setCurrentJob={setCurrentJob} />;
 	});
+
 
 	return (
 		<div className="Controller">
@@ -72,12 +102,19 @@ const Controller = ({ setCurrentJob }) => {
 			</Banner>
 			<JobsList>{renderedList}</JobsList>
 			<PageNav
-				jobs={jobs}
+				pages={pages}
 				currentPage={currentPage}
 				setCurrentPage={setCurrentPage}
 			/>
+			<Filters>
+				<FullTime fullTime={fullTime} setFullTime={setFullTime} />
+			</Filters>
 		</div>
 	);
+};
+
+const Filters = ({ children }) => {
+	return <div>{children}</div>;
 };
 
 const JobsList = ({ children }) => {
@@ -122,9 +159,9 @@ const JobCard = ({
 	);
 };
 
-const PageNav = ({ jobs, currentPage, setCurrentPage }) => {
+const PageNav = ({ pages, currentPage, setCurrentPage }) => {
 	const handleNext = () => {
-		if (currentPage === jobs.length - 1) {
+		if (currentPage === pages.length - 1) {
 			console.log(`last page sir!`);
 			return;
 		}
@@ -143,7 +180,7 @@ const PageNav = ({ jobs, currentPage, setCurrentPage }) => {
 		setCurrentPage(index);
 	};
 
-	const PageBlocks = jobs.map((job, index) => {
+	const PageBlocks = pages.map((job, index) => {
 		const isActive = index === currentPage ? "active" : "";
 
 		return (
@@ -179,11 +216,6 @@ const Search = ({ setJobs }) => {
 	const [isLoading, setIsLoading] = useState(false); // anthing that fetchs data will need loading state
 	const [submit, setSubmit] = useState(false);
 
-	const CORS = `https://cors-anywhere.herokuapp.com/`;
-	const config = {
-		jobsPerPage: 5,
-	};
-
 	useEffect(() => {
 		// setIsLoading(true);
 		// fetch(`${CORS}https://jobs.github.com/positions.json?search=${searchTerm}`)
@@ -198,7 +230,7 @@ const Search = ({ setJobs }) => {
 		// 	});
 
 		setIsLoading(true);
-		R.pipe(R.splitEvery(config.jobsPerPage), setJobs)(mockData);
+		setJobs(mockData);
 		setIsLoading(false);
 	}, []);
 
@@ -207,7 +239,7 @@ const Search = ({ setJobs }) => {
 			setIsLoading(true);
 			R.pipe(R.splitEvery(config.jobsPerPage), setJobs)(mockData);
 			setIsLoading(false);
-			setSubmit((prevState) => !prevState)
+			setSubmit((prevState) => !prevState);
 		}
 	}, [submit]);
 
