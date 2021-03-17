@@ -12,8 +12,7 @@ export default () => {
 	const renderView = R.isEmpty(currentJob) ? (
 		<>
 			<h1>Github Jobs</h1>
-			<Banner />
-			<JobsContainer setCurrentJob={setCurrentJob} />
+			<Controller setCurrentJob={setCurrentJob} />
 		</>
 	) : (
 		<JobPage currentJob={currentJob} />
@@ -58,40 +57,19 @@ const Location = () => {
 	);
 };
 
-const JobsContainer = ({ setCurrentJob }) => {
+const Controller = ({ setCurrentJob }) => {
 	const [jobs, setJobs] = useState([]); // chunked into groups of 5
 	const [currentPage, setCurrentPage] = useState(0);
-	const [isLoading, setIsLoading] = useState(false); // anthing that fetchs data will need loading state
 
-	const CORS = `https://cors-anywhere.herokuapp.com/`;
-	const config = {
-		jobsPerPage: 5,
-	};
-
-	useEffect(() => {
-		// // isLoading: true
-		// fetch(
-		// 	`${CORS}https://jobs.github.com/positions.json?search=developer`
-		// )
-		// 	.then((res) => res.json())
-		// 	.then((data) => {
-		// 		R.pipe(R.splitEvery(config.jobsPerPage), setJobs)(data);
-		// 		// isLoading: false
-		// 	})
-		// 	.catch((err) => console.log(err));
-
-		setIsLoading(true);
-		R.pipe(R.splitEvery(config.jobsPerPage), setJobs)(mockData);
-		setIsLoading(false);
-	}, []);
-
-	// <JobsList jobs={jobs} setJobs={setJobs} currentPage={currentPage} />
 	const renderedList = jobs[currentPage]?.map((job) => {
 		return <JobCard job={job} setCurrentJob={setCurrentJob} />;
 	});
 
 	return (
-		<div className="JobsContainer">
+		<div className="Controller">
+			<Banner>
+				<Search setJobs={setJobs} />
+			</Banner>
 			<JobsList>{renderedList}</JobsList>
 			<PageNav
 				jobs={jobs}
@@ -196,8 +174,32 @@ const PageNav = ({ jobs, currentPage, setCurrentPage }) => {
 	);
 };
 
-const Search = () => {
-	const [searchTerm, setSearchTerm] = useState("");
+const Search = ({ setJobs }) => {
+	const [searchTerm, setSearchTerm] = useState("developer");
+	const [isLoading, setIsLoading] = useState(false); // anthing that fetchs data will need loading state
+
+	const CORS = `https://cors-anywhere.herokuapp.com/`;
+	const config = {
+		jobsPerPage: 5,
+	};
+
+	useEffect(() => {
+		// setIsLoading(true);
+		// fetch(`${CORS}https://jobs.github.com/positions.json?search=${searchTerm}`)
+		// 	.then((res) => res.json())
+		// 	.then((data) => {
+		// 		R.pipe(R.splitEvery(config.jobsPerPage), setJobs)(data);
+		// 		setIsLoading(false);
+		// 	})
+		// 	.catch((err) => {
+		// 		setIsLoading(false);
+		// 		console.log(err);
+		// 	});
+
+		setIsLoading(true);
+		R.pipe(R.splitEvery(config.jobsPerPage), setJobs)(mockData);
+		setIsLoading(false);
+	}, []);
 
 	return (
 		<div className="Search">
@@ -210,17 +212,18 @@ const Search = () => {
 					placeholder="Title, companies, expertise or benefits"
 				></input>
 			</div>
-			<button className="Search__btn">Search</button>
+			<button
+				onClick={() => console.log("submit")}
+				className="Search__btn"
+			>
+				Search
+			</button>
 		</div>
 	);
 };
 
-const Banner = () => {
-	return (
-		<div className="Banner">
-			<Search />
-		</div>
-	);
+const Banner = ({ children }) => {
+	return <div className="Banner">{children}</div>;
 };
 
 const Header = () => {
