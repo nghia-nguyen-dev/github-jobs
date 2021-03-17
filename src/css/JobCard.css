@@ -27,7 +27,7 @@
 }
 
 .JobCard__secondary-info {
-	color: #B9BDCF;
+	color: #b9bdcf;
 	margin-left: auto;
 	display: flex;
 	align-self: end;
@@ -53,9 +53,12 @@
 
 .JobCard__location,
 .JobCard__date {
-	margin-right: 20px;
 	display: flex;
 	align-items: center;
+}
+
+.JobCard__location {
+	margin-right: 20px;
 }
 
 .JobCard__globe-icon,

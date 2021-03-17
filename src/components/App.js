@@ -16,7 +16,7 @@ export default () => {
 			<JobsContainer setCurrentJob={setCurrentJob} />
 		</>
 	) : (
-		<JobPage currentJob={currentJob}/>
+		<JobPage currentJob={currentJob} />
 	);
 
 	return <div className="App">{renderView}</div>;
@@ -111,6 +111,17 @@ const JobCard = ({
 	job: { company_logo, company, title, type, location, created_at, id },
 	job,
 }) => {
+	const daysSincePost = (created_at) => {
+		const postDate = new Date(created_at);
+		const todaysDate = new Date();
+
+		// time difference
+		var timeDiff = Math.abs(todaysDate.getTime() - postDate.getTime());
+
+		// days difference
+		return Math.ceil(timeDiff / (1000 * 3600 * 24));
+	};
+
 	return (
 		<li className="JobCard" key={id} onClick={() => setCurrentJob(job)}>
 			<img className="JobCard__company-logo" src={company_logo} />
@@ -126,7 +137,7 @@ const JobCard = ({
 				</div>
 				<div className="JobCard__date">
 					<img className="JobCard__work-icon" src={workIcon} />
-					<p>{created_at}</p>
+					<p>{daysSincePost(created_at)} days ago</p>
 				</div>
 			</div>
 		</li>
