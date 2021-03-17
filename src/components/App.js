@@ -62,7 +62,7 @@ const Controller = ({ setCurrentJob }) => {
 	const [currentPage, setCurrentPage] = useState(0);
 
 	const renderedList = jobs[currentPage]?.map((job) => {
-		return <JobCard job={job} setCurrentJob={setCurrentJob} />;
+		return <JobCard key={job.id} job={job} setCurrentJob={setCurrentJob} />;
 	});
 
 	return (
@@ -86,7 +86,7 @@ const JobsList = ({ children }) => {
 
 const JobCard = ({
 	setCurrentJob,
-	job: { company_logo, company, title, type, location, created_at, id },
+	job: { company_logo, company, title, type, location, created_at },
 	job,
 }) => {
 	const daysSincePost = (created_at) => {
@@ -101,7 +101,7 @@ const JobCard = ({
 	};
 
 	return (
-		<li className="JobCard" key={id} onClick={() => setCurrentJob(job)}>
+		<li className="JobCard" onClick={() => setCurrentJob(job)}>
 			<img className="JobCard__company-logo" src={company_logo} />
 			<div className="JobCard__primary-info">
 				<p className="JobCard__company">{company}</p>
@@ -177,6 +177,7 @@ const PageNav = ({ jobs, currentPage, setCurrentPage }) => {
 const Search = ({ setJobs }) => {
 	const [searchTerm, setSearchTerm] = useState("developer");
 	const [isLoading, setIsLoading] = useState(false); // anthing that fetchs data will need loading state
+	const [submit, setSubmit] = useState(false);
 
 	const CORS = `https://cors-anywhere.herokuapp.com/`;
 	const config = {
@@ -201,6 +202,15 @@ const Search = ({ setJobs }) => {
 		setIsLoading(false);
 	}, []);
 
+	useEffect(() => {
+		if (submit === true) {
+			setIsLoading(true);
+			R.pipe(R.splitEvery(config.jobsPerPage), setJobs)(mockData);
+			setIsLoading(false);
+			setSubmit((prevState) => !prevState)
+		}
+	}, [submit]);
+
 	return (
 		<div className="Search">
 			<div className="Search__input-container">
@@ -213,7 +223,7 @@ const Search = ({ setJobs }) => {
 				></input>
 			</div>
 			<button
-				onClick={() => console.log("submit")}
+				onClick={() => setSubmit((prevState) => !prevState)}
 				className="Search__btn"
 			>
 				Search
