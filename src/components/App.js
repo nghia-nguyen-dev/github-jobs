@@ -115,6 +115,11 @@ const Controller = ({ setCurrentJob }) => {
 
 const SearchLocation = ({ setJobs }) => {
 	const [location, setLocation] = useState("");
+	console.log(location)
+
+	useEffect(() => {
+
+	})
 
 	return (
 		<div>
@@ -122,6 +127,7 @@ const SearchLocation = ({ setJobs }) => {
 			<input
 				placeholder="City, state, zip code or country"
 				value={location}
+				onChange={(e) => setLocation(e.target.value)}
 			/>
 		</div>
 	);
@@ -226,13 +232,13 @@ const PageNav = ({ pages, currentPage, setCurrentPage }) => {
 };
 
 const Search = ({ setJobs }) => {
-	const [searchTerm, setSearchTerm] = useState("developer");
+	const [searchDescription, setSearchDescription] = useState("developer");
 	const [isLoading, setIsLoading] = useState(false); // anthing that fetchs data will need loading state
 	const [submit, setSubmit] = useState(false);
 
 	useEffect(() => {
 		// setIsLoading(true);
-		// fetch(`${CORS}https://jobs.github.com/positions.json?search=${searchTerm}`)
+		// fetch(`${CORS}https://jobs.github.com/positions.json?search=${searchDescription}`)
 		// 	.then((res) => res.json())
 		// 	.then((data) => {
 		// 		R.pipe(R.splitEvery(config.jobsPerPage), setJobs)(data);
@@ -262,8 +268,8 @@ const Search = ({ setJobs }) => {
 			<div className="Search__input-container">
 				<img className="Search__globe-icon" src={globeIcon} />
 				<input
-					onChange={(e) => setSearchTerm(e.target.value)}
-					value={searchTerm}
+					onChange={(e) => setSearchDescription(e.target.value)}
+					value={searchDescription}
 					className="Search__input"
 					placeholder="Title, companies, expertise or benefits"
 				></input>
