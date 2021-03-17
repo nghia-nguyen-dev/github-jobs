@@ -94,7 +94,6 @@ const Controller = ({ setCurrentJob }) => {
 		return <JobCard key={job.id} job={job} setCurrentJob={setCurrentJob} />;
 	});
 
-
 	return (
 		<div className="Controller">
 			<Banner>
@@ -108,7 +107,22 @@ const Controller = ({ setCurrentJob }) => {
 			/>
 			<Filters>
 				<FullTime fullTime={fullTime} setFullTime={setFullTime} />
+				<SearchLocation setJobs={setJobs} />
 			</Filters>
+		</div>
+	);
+};
+
+const SearchLocation = ({ setJobs }) => {
+	const [location, setLocation] = useState("");
+
+	return (
+		<div>
+			<label>Location</label>
+			<input
+				placeholder="City, state, zip code or country"
+				value={location}
+			/>
 		</div>
 	);
 };
