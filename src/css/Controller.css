@@ -1,0 +1,6 @@
+.Controller {
+    display: grid;
+    grid-template-columns: 1fr 1.7fr;
+    gap: 0 35px;
+    margin-top: 32px;
+}

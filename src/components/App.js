@@ -47,8 +47,9 @@ const FullTime = ({ fullTime, setFullTime }) => {
 	};
 
 	return (
-		<div>
+		<div className="FullTime">
 			<input
+				className="FullTime__checkbox"
 				type="checkbox"
 				id="Fulltime"
 				checked={fullTime}
@@ -100,16 +101,16 @@ const Controller = ({ setCurrentJob }) => {
 			<Banner>
 				<Search setJobs={setJobs} setIsLoading={setIsLoading} />
 			</Banner>
+			<Filters>
+				<FullTime fullTime={fullTime} setFullTime={setFullTime} />
+				<SearchLocation setJobs={setJobs} setIsLoading={setIsLoading} />
+			</Filters>
 			<JobsList>{renderedList}</JobsList>
 			<PageNav
 				pages={pages}
 				currentPage={currentPage}
 				setCurrentPage={setCurrentPage}
 			/>
-			<Filters>
-				<FullTime fullTime={fullTime} setFullTime={setFullTime} />
-				<SearchLocation setJobs={setJobs} setIsLoading={setIsLoading} />
-			</Filters>
 		</div>
 	);
 };
@@ -130,23 +131,27 @@ const SearchLocation = ({ setJobs, setIsLoading }) => {
 	}, [location]);
 
 	return (
-		<div>
-			<label>Location</label>
-			<input
-				placeholder="City, state, zip code or country"
-				value={location}
-				onChange={(e) => setLocation(e.target.value)}
-			/>
+		<div className="SearchLocation">
+			<label className="SearchLocation__label">Location</label>
+			<div className="SearchLocation__input-container">
+				<img className="SearchLocation__globe-icon" src={globeIcon}/>
+				<input
+					className="SearchLocation__input"
+					placeholder="City, state, zip code or country"
+					value={location}
+					onChange={(e) => setLocation(e.target.value)}
+				/>
+			</div>
 		</div>
 	);
 };
 
 const Filters = ({ children }) => {
-	return <div>{children}</div>;
+	return <div className="Filters">{children}</div>;
 };
 
 const JobsList = ({ children }) => {
-	return <ul>{children}</ul>;
+	return <ul className="JobsList">{children}</ul>;
 };
 
 const JobCard = ({

@@ -3,6 +3,8 @@
 	color: #b9bdcf;
 	width: max-content;
 	margin-left: auto;
+	grid-column: 2/3;
+	align-items: center;
 }
 
 .PageNav > div {
