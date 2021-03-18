@@ -104,6 +104,7 @@ const Controller = ({ setCurrentJob }) => {
 			<Filters>
 				<FullTime fullTime={fullTime} setFullTime={setFullTime} />
 				<SearchLocation setJobs={setJobs} setIsLoading={setIsLoading} />
+				<Cities setJobs={setJobs}/>
 			</Filters>
 			<JobsList>{renderedList}</JobsList>
 			<PageNav
@@ -111,6 +112,62 @@ const Controller = ({ setCurrentJob }) => {
 				currentPage={currentPage}
 				setCurrentPage={setCurrentPage}
 			/>
+		</div>
+	);
+};
+
+const Cities = ({setJobs}) => {
+	const [city, setCity] = useState("");
+
+	useEffect(() => {
+		console.log(mockData)
+		const filter = mockData.filter(data => R.includes(city, data.location));
+		console.log(filter)
+		setJobs(filter)
+	},[city]);
+
+	const handleSelect = (e) => {
+		setCity(e.target.value);
+	};
+
+	return (
+		<div className="Cities" onChange={handleSelect}>
+			<div>
+				<input
+					className="Cities__input"
+					type="radio"
+					value="Boston"
+					name="city"
+				/>{" "}
+				Boston
+			</div>
+			<div>
+				<input
+					className="Cities__input"
+					type="radio"
+					value="Chicago"
+					name="city"
+				/>{" "}
+				Chicago
+			</div>
+			<div>
+				<input
+					className="Cities__input"
+					type="radio"
+					value="Toronto"
+					name="city"
+				/>{" "}
+				Toronto
+			</div>
+			<div>
+				<input
+					className="Cities__input"
+					type="radio"
+					value="Berlin"
+					name="city"
+				/>{" "}
+				Berlin
+			</div>
 		</div>
 	);
 };
@@ -134,7 +191,7 @@ const SearchLocation = ({ setJobs, setIsLoading }) => {
 		<div className="SearchLocation">
 			<label className="SearchLocation__label">Location</label>
 			<div className="SearchLocation__input-container">
-				<img className="SearchLocation__globe-icon" src={globeIcon}/>
+				<img className="SearchLocation__globe-icon" src={globeIcon} />
 				<input
 					className="SearchLocation__input"
 					placeholder="City, state, zip code or country"

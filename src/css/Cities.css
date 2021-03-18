@@ -1,0 +1,11 @@
+.Cities {
+    margin-top: 24px;
+}
+
+.Cities > div {
+    margin-bottom: 12px;
+}
+
+.Cities__input {
+    margin-right: 6px;
+}
