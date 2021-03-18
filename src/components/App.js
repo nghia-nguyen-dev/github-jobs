@@ -54,7 +54,7 @@ const FullTime = ({ fullTime, setFullTime }) => {
 				checked={fullTime}
 				onChange={handleCheckbox}
 			/>
-			<label for="Fulltime">Fulltime</label>
+			<label htmlFor="Fulltime">Fulltime</label>
 		</div>
 	);
 };
@@ -76,6 +76,7 @@ const Controller = ({ setCurrentJob }) => {
 	const [currentPage, setCurrentPage] = useState(0);
 	const [pages, setPages] = useState([]);
 	const [fullTime, setFullTime] = useState(false);
+	const [isLoading, setIsLoading] = useState(false); // anthing that fetchs data will need loading state
 
 	useEffect(() => {
 		let temp = [...jobs];
@@ -97,7 +98,7 @@ const Controller = ({ setCurrentJob }) => {
 	return (
 		<div className="Controller">
 			<Banner>
-				<Search setJobs={setJobs} />
+				<Search setJobs={setJobs} setIsLoading={setIsLoading} />
 			</Banner>
 			<JobsList>{renderedList}</JobsList>
 			<PageNav
@@ -107,19 +108,26 @@ const Controller = ({ setCurrentJob }) => {
 			/>
 			<Filters>
 				<FullTime fullTime={fullTime} setFullTime={setFullTime} />
-				<SearchLocation setJobs={setJobs} />
+				<SearchLocation setJobs={setJobs} setIsLoading={setIsLoading} />
 			</Filters>
 		</div>
 	);
 };
 
-const SearchLocation = ({ setJobs }) => {
+const SearchLocation = ({ setJobs, setIsLoading }) => {
 	const [location, setLocation] = useState("");
-	console.log(location)
 
 	useEffect(() => {
+		if (!R.isEmpty(location)) {
+			const timeoutId = setTimeout(() => {
+				console.log(`fetching data...`);
+			}, 500);
 
-	})
+			return () => {
+				clearTimeout(timeoutId);
+			};
+		}
+	}, [location]);
 
 	return (
 		<div>
@@ -231,9 +239,8 @@ const PageNav = ({ pages, currentPage, setCurrentPage }) => {
 	);
 };
 
-const Search = ({ setJobs }) => {
+const Search = ({ setJobs, setIsLoading }) => {
 	const [searchDescription, setSearchDescription] = useState("developer");
-	const [isLoading, setIsLoading] = useState(false); // anthing that fetchs data will need loading state
 	const [submit, setSubmit] = useState(false);
 
 	useEffect(() => {
