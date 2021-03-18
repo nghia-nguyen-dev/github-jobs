@@ -7,7 +7,6 @@ import chevronLeft from "assets/icons/chevron_left.svg";
 import chevronRight from "assets/icons/chevron_right.svg";
 import dots from "assets/icons/dots.svg";
 
-const CORS = `https://cors-anywhere.herokuapp.com/`;
 const config = {
 	jobsPerPage: 5,
 };
@@ -78,19 +77,25 @@ const Controller = ({ setCurrentJob }) => {
 	const [pages, setPages] = useState([]);
 	const [fullTime, setFullTime] = useState(false);
 	const [isLoading, setIsLoading] = useState(false); // anthing that fetchs data will need loading state
+	const [city, setCity] = useState("");
 
 	useEffect(() => {
-		let temp = [...jobs];
+		if (!R.isEmpty(jobs)) {
+			let temp = [...jobs];
 
-		// full time filter
-		if (fullTime) {
-			temp = temp.filter((job) => job.type === "Full Time");
+			if (fullTime) {
+				temp = temp.filter((job) => job.type === "Full Time");
+			}
+
+			if (!R.isEmpty(city)) {
+				temp = temp.filter((job) =>
+					job.location.toLowerCase().includes(city.toLowerCase())
+				);
+			}
+
+			R.pipe(R.splitEvery(config.jobsPerPage), setPages)(temp);
 		}
-		// location filter
-
-		// output
-		R.pipe(R.splitEvery(config.jobsPerPage), setPages)(temp);
-	}, [jobs, fullTime]);
+	}, [jobs, fullTime, city]);
 
 	const renderedList = pages[currentPage]?.map((job) => {
 		return <JobCard key={job.id} job={job} setCurrentJob={setCurrentJob} />;
@@ -104,7 +109,7 @@ const Controller = ({ setCurrentJob }) => {
 			<Filters>
 				<FullTime fullTime={fullTime} setFullTime={setFullTime} />
 				<SearchLocation setJobs={setJobs} setIsLoading={setIsLoading} />
-				<Cities setJobs={setJobs}/>
+				<Cities setCity={setCity} />
 			</Filters>
 			<JobsList>{renderedList}</JobsList>
 			<PageNav
@@ -116,16 +121,7 @@ const Controller = ({ setCurrentJob }) => {
 	);
 };
 
-const Cities = ({setJobs}) => {
-	const [city, setCity] = useState("");
-
-	useEffect(() => {
-		console.log(mockData)
-		const filter = mockData.filter(data => R.includes(city, data.location));
-		console.log(filter)
-		setJobs(filter)
-	},[city]);
-
+const Cities = ({ setCity }) => {
 	const handleSelect = (e) => {
 		setCity(e.target.value);
 	};
@@ -179,6 +175,15 @@ const SearchLocation = ({ setJobs, setIsLoading }) => {
 		if (!R.isEmpty(location)) {
 			const timeoutId = setTimeout(() => {
 				console.log(`fetching data...`);
+				fetch(
+					`https://api.allorigins.win/get?url=https://jobs.github.com/positions.json?location=${location}`
+				)
+					.then((res) => res.json())
+					.then((data) => JSON.parse(data.contents))
+					.then((jobs) => setJobs(jobs))
+					.catch((err) => {
+						console.log(err);
+					});
 			}, 500);
 
 			return () => {
@@ -306,29 +311,35 @@ const Search = ({ setJobs, setIsLoading }) => {
 	const [submit, setSubmit] = useState(false);
 
 	useEffect(() => {
-		// setIsLoading(true);
-		// fetch(`${CORS}https://jobs.github.com/positions.json?search=${searchDescription}`)
-		// 	.then((res) => res.json())
-		// 	.then((data) => {
-		// 		R.pipe(R.splitEvery(config.jobsPerPage), setJobs)(data);
-		// 		setIsLoading(false);
-		// 	})
-		// 	.catch((err) => {
-		// 		setIsLoading(false);
-		// 		console.log(err);
-		// 	});
+		fetch(
+			`https://api.allorigins.win/get?url=https://jobs.github.com/positions.json?search=${searchDescription}`
+		)
+			.then((res) => res.json())
+			.then((data) => JSON.parse(data.contents))
+			.then((jobs) => setJobs(jobs))
+			.catch((err) => {
+				console.log(err);
+			});
 
-		setIsLoading(true);
-		setJobs(mockData);
-		setIsLoading(false);
+		// setIsLoading(true);
+		// setJobs(mockData);
+		// setIsLoading(false);
 	}, []);
 
 	useEffect(() => {
 		if (submit === true) {
-			setIsLoading(true);
-			R.pipe(R.splitEvery(config.jobsPerPage), setJobs)(mockData);
-			setIsLoading(false);
-			setSubmit((prevState) => !prevState);
+			fetch(
+				`https://api.allorigins.win/get?url=https://jobs.github.com/positions.json?search=${searchDescription}`
+			)
+				.then((res) => res.json())
+				.then((data) => JSON.parse(data.contents))
+				.then((jobs) => {
+					setJobs(jobs);
+					setSubmit(false);
+				})
+				.catch((err) => {
+					console.log(err);
+				});
 		}
 	}, [submit]);
 
@@ -343,10 +354,7 @@ const Search = ({ setJobs, setIsLoading }) => {
 					placeholder="Title, companies, expertise or benefits"
 				></input>
 			</div>
-			<button
-				onClick={() => setSubmit((prevState) => !prevState)}
-				className="Search__btn"
-			>
+			<button onClick={() => setSubmit(true)} className="Search__btn">
 				Search
 			</button>
 		</div>
