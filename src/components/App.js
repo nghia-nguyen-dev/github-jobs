@@ -307,7 +307,7 @@ const PageNav = ({ pages, currentPage, setCurrentPage }) => {
 };
 
 const Search = ({ setJobs, setIsLoading }) => {
-	const [searchDescription, setSearchDescription] = useState("developer");
+	const [searchDescription, setSearchDescription] = useState("");
 	const [submit, setSubmit] = useState(false);
 
 	useEffect(() => {
