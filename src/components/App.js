@@ -71,15 +71,12 @@ const Location = () => {
 	);
 };
 
-const Controller = ({ setCurrentJob }) => {
-	const [jobs, setJobs] = useState([]);
-	const [currentPage, setCurrentPage] = useState(0);
-	const [pages, setPages] = useState([]);
-	const [fullTime, setFullTime] = useState(false);
-	const [isLoading, setIsLoading] = useState(false);
+const Filters = ({ jobs, setPages, setCurrentPage }) => {
 	const [city, setCity] = useState("");
+	const [fullTime, setFullTime] = useState(false);
 
 	useEffect(() => {
+		setCurrentPage(0);
 		if (!R.isEmpty(jobs)) {
 			let temp = [...jobs];
 
@@ -97,26 +94,48 @@ const Controller = ({ setCurrentJob }) => {
 		}
 	}, [jobs, fullTime, city]);
 
-	const renderedList = pages[currentPage]?.map((job) => {
-		return <JobCard key={job.id} job={job} setCurrentJob={setCurrentJob} />;
-	});
+	return (
+		<div className="Filters">
+			<FullTime fullTime={fullTime} setFullTime={setFullTime} />
+			<LocationFilter setCity={setCity} />
+			<Cities setCity={setCity} />
+		</div>
+	);
+};
+
+const Controller = ({ setCurrentJob }) => {
+	const [jobs, setJobs] = useState([]);
+	const [pages, setPages] = useState([]);
+	const [currentPage, setCurrentPage] = useState(0);
 
 	return (
 		<div className="Controller">
 			<Banner>
-				<Search setJobs={setJobs} setIsLoading={setIsLoading} />
+				<Search setJobs={setJobs} />
 			</Banner>
-			<Filters>
-				<FullTime fullTime={fullTime} setFullTime={setFullTime} />
-				<LocationFilter
-					setJobs={setJobs}
-					setIsLoading={setIsLoading}
-					city={city}
-					setCity={setCity}
-				/>
-				<Cities setCity={setCity} setCurrentPage={setCurrentPage} />
-			</Filters>
-			<JobsList>{renderedList}</JobsList>
+			<Filters
+				jobs={jobs}
+				setPages={setPages}
+				setCurrentPage={setCurrentPage}
+			/>
+			<JobsView
+				pages={pages}
+				setCurrentJob={setCurrentJob}
+				currentPage={currentPage}
+				setCurrentPage={setCurrentPage}
+			/>
+		</div>
+	);
+};
+
+const JobsView = ({ pages, setCurrentJob, currentPage, setCurrentPage }) => {
+	return (
+		<div className="JobsView">
+			<JobsList
+				pages={pages}
+				currentPage={currentPage}
+				setCurrentJob={setCurrentJob}
+			/>
 			<PageNav
 				pages={pages}
 				currentPage={currentPage}
@@ -126,10 +145,69 @@ const Controller = ({ setCurrentJob }) => {
 	);
 };
 
-const Cities = ({ setCity, setCurrentPage }) => {
+const JobsList = ({ pages, currentPage, setCurrentJob }) => {
+	const renderedList = pages[currentPage]?.map((job) => {
+		return <JobCard key={job.id} job={job} setCurrentJob={setCurrentJob} />;
+	});
+
+	return <ul className="JobsList">{renderedList}</ul>;
+};
+
+const PageNav = ({ pages, currentPage, setCurrentPage }) => {
+	const handleNext = () => {
+		if (currentPage === pages.length - 1) {
+			console.log(`last page sir!`);
+			return;
+		}
+		setCurrentPage((prev) => prev + 1);
+	};
+
+	const handlePrev = () => {
+		if (currentPage === 0) {
+			console.log(`first page sir!`);
+			return;
+		}
+		setCurrentPage((prev) => prev - 1);
+	};
+
+	const handleClick = (index) => {
+		setCurrentPage(index);
+	};
+
+	const PageBlocks = pages.map((job, index) => {
+		const isActive = index === currentPage ? "active" : "";
+
+		return (
+			<div
+				className={`PageNav__number ${isActive}`}
+				onClick={() => handleClick(index)}
+				key={index}
+			>
+				<span>{index + 1}</span>
+			</div>
+		);
+	});
+
+	return (
+		<div className="PageNav">
+			<img
+				src={chevronLeft}
+				className="PageNav__icon"
+				onClick={handlePrev}
+			/>
+			{PageBlocks}
+			<img
+				src={chevronRight}
+				className="PageNav__icon"
+				onClick={handleNext}
+			/>
+		</div>
+	);
+};
+
+const Cities = ({ setCity }) => {
 	const handleSelect = (e) => {
 		setCity(e.target.value);
-		setCurrentPage(0);
 	};
 
 	return (
@@ -203,14 +281,6 @@ const LocationFilter = ({ setCity }) => {
 	);
 };
 
-const Filters = ({ children }) => {
-	return <div className="Filters">{children}</div>;
-};
-
-const JobsList = ({ children }) => {
-	return <ul className="JobsList">{children}</ul>;
-};
-
 const JobCard = ({
 	setCurrentJob,
 	job: { company_logo, company, title, type, location, created_at },
@@ -249,105 +319,45 @@ const JobCard = ({
 	);
 };
 
-const PageNav = ({ pages, currentPage, setCurrentPage }) => {
-	const handleNext = () => {
-		if (currentPage === pages.length - 1) {
-			console.log(`last page sir!`);
-			return;
-		}
-		setCurrentPage((prev) => prev + 1);
-	};
-
-	const handlePrev = () => {
-		if (currentPage === 0) {
-			console.log(`first page sir!`);
-			return;
-		}
-		setCurrentPage((prev) => prev - 1);
-	};
-
-	const handleClick = (index) => {
-		setCurrentPage(index);
-	};
-
-	const PageBlocks = pages.map((job, index) => {
-		const isActive = index === currentPage ? "active" : "";
-
-		return (
-			<div
-				className={`PageNav__number ${isActive}`}
-				onClick={() => handleClick(index)}
-				key={index}
-			>
-				<span>{index + 1}</span>
-			</div>
-		);
-	});
-
-	return (
-		<div className="PageNav">
-			<img
-				src={chevronLeft}
-				className="PageNav__icon"
-				onClick={handlePrev}
-			/>
-			{PageBlocks}
-			<img
-				src={chevronRight}
-				className="PageNav__icon"
-				onClick={handleNext}
-			/>
-		</div>
-	);
+// utils
+const fetchData = (searchDescription, setJobs) => {
+	fetch(
+		`https://api.allorigins.win/get?url=https://jobs.github.com/positions.json?search=${searchDescription}`
+	)
+		.then((res) => res.json())
+		.then((data) => JSON.parse(data.contents))
+		.then((jobs) => setJobs(jobs))
+		.catch((err) => {
+			console.log(err);
+		});
 };
 
-const Search = ({ setJobs, setIsLoading }) => {
+const Search = ({ setJobs }) => {
 	const [searchDescription, setSearchDescription] = useState("");
-	const [submit, setSubmit] = useState(false);
 
 	useEffect(() => {
-		fetch(
-			`https://api.allorigins.win/get?url=https://jobs.github.com/positions.json?search=${searchDescription}`
-		)
-			.then((res) => res.json())
-			.then((data) => JSON.parse(data.contents))
-			.then((jobs) => setJobs(jobs))
-			.catch((err) => {
-				console.log(err);
-			});
+		fetchData(searchDescription, setJobs);
 	}, []);
 
-	useEffect(() => {
-		if (submit === true) {
-			fetch(
-				`https://api.allorigins.win/get?url=https://jobs.github.com/positions.json?search=${searchDescription}`
-			)
-				.then((res) => res.json())
-				.then((data) => JSON.parse(data.contents))
-				.then((jobs) => {
-					setJobs(jobs);
-					setSubmit(false);
-				})
-				.catch((err) => {
-					console.log(err);
-				});
-		}
-	}, [submit]);
+	const handleSubmit = (e) => {
+		e.preventDefault();
+		fetchData(searchDescription, setJobs);
+	};
 
 	return (
 		<div className="Search">
-			<div className="Search__input-container">
-				<img className="Search__globe-icon" src={globeIcon} />
-				<input
-					onChange={(e) => setSearchDescription(e.target.value)}
-					value={searchDescription}
-					className="Search__input"
-					placeholder="Title, companies, expertise or benefits"
-				></input>
-			</div>
-			<button onClick={() => setSubmit(true)} className="Search__btn">
-				Search
-			</button>
+			<form className="Search__form" onSubmit={handleSubmit}>
+				<div className="Search__input-container">
+					<img className="Search__globe-icon" src={globeIcon} />
+					<input
+						onChange={(e) => setSearchDescription(e.target.value)}
+						value={searchDescription}
+						className="Search__input"
+						placeholder="Title, companies, expertise or benefits"
+					></input>
+				</div>
+				<button className="Search__btn">Search</button>
+			</form>
 		</div>
 	);
 };
