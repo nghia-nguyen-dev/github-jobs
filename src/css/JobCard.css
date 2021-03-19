@@ -13,57 +13,18 @@
 	cursor: pointer;
 }
 
-.JobCard__company-logo {
-	width: 90px;
-	object-fit: contain;
-	object-position: center;
-	border-radius: 4px;
-	margin-right: 16px;
-}
-
 .JobCard__primary-info {
 	display: flex;
 	flex-direction: column;
 }
 
 .JobCard__secondary-info {
-	color: #b9bdcf;
 	margin-left: auto;
 	display: flex;
 	align-self: end;
 }
 
-.JobCard__type {
-	margin-top: auto;
-	padding: 6px 8px;
-	border: 1px solid #334680;
-	border-radius: 4px;
-	width: max-content;
-}
-
-.JobCard__company {
-	font-weight: bold;
-}
-
-.JobCard__company,
 .JobCard__secondary-info,
 .JobCard__type {
 	font-size: 12px;
-}
-
-.JobCard__location,
-.JobCard__date {
-	display: flex;
-	align-items: center;
-}
-
-.JobCard__location {
-	margin-right: 20px;
-}
-
-.JobCard__globe-icon,
-.JobCard__work-icon {
-	margin-right: 5px;
-	height: 15px;
-	width: 15px;
 }

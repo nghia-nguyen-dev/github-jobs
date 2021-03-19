@@ -1,0 +1,9 @@
+.JobType {
+	margin-top: auto;
+	padding: 6px 8px;
+	border: 1px solid #334680;
+	color: #334680;
+	border-radius: 4px;
+	width: max-content;
+    font-size: 12px;
+}

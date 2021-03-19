@@ -1,11 +1,14 @@
 import { useState, useEffect, useRef } from "react";
 import globeIcon from "assets/icons/globe.svg";
 import workIcon from "assets/icons/work.svg";
+import clockIcon from "assets/icons/clock.svg";
 import * as R from "ramda";
 import mockData from "utils/mockData.json";
 import chevronLeft from "assets/icons/chevron_left.svg";
 import chevronRight from "assets/icons/chevron_right.svg";
 import dots from "assets/icons/dots.svg";
+import DOMPurify from "dompurify";
+import arrowLeft from "assets/icons/left_arrow.svg";
 
 const config = {
 	jobsPerPage: 5,
@@ -15,27 +18,77 @@ export default () => {
 	const [currentJob, setCurrentJob] = useState({});
 	const renderView = R.isEmpty(currentJob) ? (
 		<>
-			<h1>Github Jobs</h1>
+			<Header />
 			<Controller setCurrentJob={setCurrentJob} />
 		</>
 	) : (
-		<JobPage currentJob={currentJob} />
+		<JobPage currentJob={currentJob} setCurrentJob={setCurrentJob} />
 	);
 
 	return <div className="App">{renderView}</div>;
 };
 
-const JobPage = () => {
-	return <div>Job Page</div>;
-};
-
-const PostDate = () => {
-	// some math operation to get num of days from the time it was posted
+const Back = ({ setCurrentJob }) => {
+	const handleClick = () => {
+		setCurrentJob({});
+	};
 
 	return (
-		<div>
-			<img />
-			<p>5 days ago</p>
+		<div onClick={handleClick} className="Back">
+			<img src={arrowLeft} className="Back__arrow" />
+			<p>Back to search</p>
+		</div>
+	);
+};
+
+const JobPage = ({
+	currentJob: {
+		title,
+		type,
+		created_at,
+		company_logo,
+		company,
+		location,
+		description,
+		how_to_apply,
+	},
+	setCurrentJob,
+}) => {
+	return (
+		<div className="JobPage">
+			<Header className="JobPage__header" />
+			<div className="JobPage__contact">
+				<Back setCurrentJob={setCurrentJob} />
+				<h4>How to apply</h4>
+				<p
+					className="JobPage__contact"
+					dangerouslySetInnerHTML={{
+						__html: DOMPurify.sanitize(how_to_apply),
+					}}
+				></p>
+			</div>
+			<div className="JobPage__job-description">
+				<div className="JobPage__header-content">
+					<div className="JobPage__flex-grp">
+						<h2 className="JobPage__title">{title}</h2>
+						<JobType type={type} className="JobPage" />
+					</div>
+					<PostDate created_at={created_at} className="JobPage" />
+				</div>
+				<div className="JobPage__company">
+					<CompanyLogo company_logo={company_logo} className="sm" />
+					<div>
+						<CompanyName company={company} className="reg" />
+						<Location location={location} />
+					</div>
+				</div>
+				<div
+					className="JobPage__description"
+					dangerouslySetInnerHTML={{
+						__html: DOMPurify.sanitize(description),
+					}}
+				/>
+			</div>
 		</div>
 	);
 };
@@ -56,18 +109,6 @@ const FullTime = ({ fullTime, setFullTime }) => {
 			/>
 			<label htmlFor="Fulltime">Fulltime</label>
 		</div>
-	);
-};
-
-const Location = () => {
-	return (
-		<section>
-			<h3>Location</h3>
-			<div>
-				<i></i>
-				<input></input>
-			</div>
-		</section>
 	);
 };
 
@@ -281,41 +322,81 @@ const LocationFilter = ({ setCity }) => {
 	);
 };
 
+const daysSincePost = (created_at) => {
+	const postDate = new Date(created_at);
+	const todaysDate = new Date();
+
+	// time difference
+	var timeDiff = Math.abs(todaysDate.getTime() - postDate.getTime());
+
+	// days difference
+	return Math.ceil(timeDiff / (1000 * 3600 * 24));
+};
+
+const JobType = ({ type, className }) => {
+	return <p className={`JobType JobType--${className}`}>{type}</p>;
+};
+
 const JobCard = ({
 	setCurrentJob,
 	job: { company_logo, company, title, type, location, created_at },
 	job,
 }) => {
-	const daysSincePost = (created_at) => {
-		const postDate = new Date(created_at);
-		const todaysDate = new Date();
-
-		// time difference
-		var timeDiff = Math.abs(todaysDate.getTime() - postDate.getTime());
-
-		// days difference
-		return Math.ceil(timeDiff / (1000 * 3600 * 24));
+	const handleClick = () => {
+		setCurrentJob(job);
+		window.scroll({
+			top: 0,
+			left: 0,
+			behavior: "smooth",
+		});
 	};
 
 	return (
-		<li className="JobCard" onClick={() => setCurrentJob(job)}>
-			<img className="JobCard__company-logo" src={company_logo} />
+		<li className="JobCard" onClick={handleClick}>
+			<CompanyLogo company_logo={company_logo} className="reg" />
 			<div className="JobCard__primary-info">
-				<p className="JobCard__company">{company}</p>
-				<p>{title}</p>
-				<p className="JobCard__type">{type}</p>
+				<CompanyName company={company} className="sm" />
+				<h2>{title}</h2>
+				<JobType type={type} />
 			</div>
 			<div className="JobCard__secondary-info">
-				<div className="JobCard__location">
-					<img className="JobCard__globe-icon" src={globeIcon} />
-					<p>{location}</p>
-				</div>
-				<div className="JobCard__date">
-					<img className="JobCard__work-icon" src={workIcon} />
-					<p>{daysSincePost(created_at)} days ago</p>
-				</div>
+				<Location location={location} />
+				<PostDate created_at={created_at} />
 			</div>
 		</li>
+	);
+};
+
+const CompanyName = ({ company, className }) => {
+	return (
+		<h3 className={`CompanyName CompanyName--${className}`}>{company}</h3>
+	);
+};
+
+const CompanyLogo = ({ company_logo, className }) => {
+	return (
+		<img
+			className={`CompanyLogo CompanyLogo--${className}`}
+			src={company_logo}
+		/>
+	);
+};
+
+const Location = ({ location }) => {
+	return (
+		<div className="Location">
+			<img className="Location__globe-icon" src={globeIcon} />
+			<p>{location}</p>
+		</div>
+	);
+};
+
+const PostDate = ({ created_at, className }) => {
+	return (
+		<div className={`PostDate PostDate--${className}`}>
+			<img className="PostDate__clock-icon" src={clockIcon} />
+			<p>{daysSincePost(created_at)} days ago</p>
+		</div>
 	);
 };
 
@@ -366,6 +447,6 @@ const Banner = ({ children }) => {
 	return <div className="Banner">{children}</div>;
 };
 
-const Header = () => {
-	return <h1>Github Jobs</h1>;
+const Header = ({ className }) => {
+	return <h1 className={className}>Github Jobs</h1>;
 };
