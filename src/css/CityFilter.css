@@ -1,0 +1,35 @@
+.CityFilter {
+	font-size: 14px;
+	display: flex;
+	flex-direction: column;
+	margin-top: 30px;
+}
+
+.CityFilter__input {
+	border: none;
+	height: 42px;
+	width: 100%;
+	font-size: 12px;
+	color: #b9bdcf;
+}
+
+.CityFilter__input-container {
+	background-color: white;
+	display: flex;
+	align-items: center;
+	border-radius: 4px;
+	padding: 0 20px;
+}
+
+.CityFilter__globe-icon {
+	height: 15px;
+	width: 15px;
+	margin-right: 10px;
+}
+
+.CityFilter__label {
+	text-transform: uppercase;
+	font-weight: bold;
+	margin-bottom: 14px;
+	color: #b9bdcf;
+}

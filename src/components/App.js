@@ -72,11 +72,11 @@ const Location = () => {
 };
 
 const Controller = ({ setCurrentJob }) => {
-	const [jobs, setJobs] = useState([]); 
+	const [jobs, setJobs] = useState([]);
 	const [currentPage, setCurrentPage] = useState(0);
 	const [pages, setPages] = useState([]);
 	const [fullTime, setFullTime] = useState(false);
-	const [isLoading, setIsLoading] = useState(false); 
+	const [isLoading, setIsLoading] = useState(false);
 	const [city, setCity] = useState("");
 
 	useEffect(() => {
@@ -108,8 +108,8 @@ const Controller = ({ setCurrentJob }) => {
 			</Banner>
 			<Filters>
 				<FullTime fullTime={fullTime} setFullTime={setFullTime} />
-				<SearchLocation setJobs={setJobs} setIsLoading={setIsLoading} />
-				<Cities setCity={setCity} setCurrentPage={setCurrentPage}/>
+				<CityFilter setJobs={setJobs} setIsLoading={setIsLoading} />
+				<Cities setCity={setCity} setCurrentPage={setCurrentPage} />
 			</Filters>
 			<JobsList>{renderedList}</JobsList>
 			<PageNav
@@ -124,7 +124,7 @@ const Controller = ({ setCurrentJob }) => {
 const Cities = ({ setCity, setCurrentPage }) => {
 	const handleSelect = (e) => {
 		setCity(e.target.value);
-		setCurrentPage(0)
+		setCurrentPage(0);
 	};
 
 	return (
@@ -169,7 +169,7 @@ const Cities = ({ setCity, setCurrentPage }) => {
 	);
 };
 
-const SearchLocation = ({ setJobs, setIsLoading }) => {
+const CityFilter = ({ setJobs, setIsLoading }) => {
 	const [location, setLocation] = useState("");
 
 	useEffect(() => {
@@ -194,12 +194,12 @@ const SearchLocation = ({ setJobs, setIsLoading }) => {
 	}, [location]);
 
 	return (
-		<div className="SearchLocation">
-			<label className="SearchLocation__label">Location</label>
-			<div className="SearchLocation__input-container">
-				<img className="SearchLocation__globe-icon" src={globeIcon} />
+		<div className="CityFilter">
+			<label className="CityFilter__label">Location</label>
+			<div className="CityFilter__input-container">
+				<img className="CityFilter__globe-icon" src={globeIcon} />
 				<input
-					className="SearchLocation__input"
+					className="CityFilter__input"
 					placeholder="City, state, zip code or country"
 					value={location}
 					onChange={(e) => setLocation(e.target.value)}
