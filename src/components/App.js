@@ -72,11 +72,11 @@ const Location = () => {
 };
 
 const Controller = ({ setCurrentJob }) => {
-	const [jobs, setJobs] = useState([]); // chunked into groups of 5
+	const [jobs, setJobs] = useState([]); 
 	const [currentPage, setCurrentPage] = useState(0);
 	const [pages, setPages] = useState([]);
 	const [fullTime, setFullTime] = useState(false);
-	const [isLoading, setIsLoading] = useState(false); // anthing that fetchs data will need loading state
+	const [isLoading, setIsLoading] = useState(false); 
 	const [city, setCity] = useState("");
 
 	useEffect(() => {
@@ -109,7 +109,7 @@ const Controller = ({ setCurrentJob }) => {
 			<Filters>
 				<FullTime fullTime={fullTime} setFullTime={setFullTime} />
 				<SearchLocation setJobs={setJobs} setIsLoading={setIsLoading} />
-				<Cities setCity={setCity} />
+				<Cities setCity={setCity} setCurrentPage={setCurrentPage}/>
 			</Filters>
 			<JobsList>{renderedList}</JobsList>
 			<PageNav
@@ -121,9 +121,10 @@ const Controller = ({ setCurrentJob }) => {
 	);
 };
 
-const Cities = ({ setCity }) => {
+const Cities = ({ setCity, setCurrentPage }) => {
 	const handleSelect = (e) => {
 		setCity(e.target.value);
+		setCurrentPage(0)
 	};
 
 	return (
@@ -320,10 +321,6 @@ const Search = ({ setJobs, setIsLoading }) => {
 			.catch((err) => {
 				console.log(err);
 			});
-
-		// setIsLoading(true);
-		// setJobs(mockData);
-		// setIsLoading(false);
 	}, []);
 
 	useEffect(() => {
