@@ -108,7 +108,12 @@ const Controller = ({ setCurrentJob }) => {
 			</Banner>
 			<Filters>
 				<FullTime fullTime={fullTime} setFullTime={setFullTime} />
-				<CityFilter setJobs={setJobs} setIsLoading={setIsLoading} />
+				<LocationFilter
+					setJobs={setJobs}
+					setIsLoading={setIsLoading}
+					city={city}
+					setCity={setCity}
+				/>
 				<Cities setCity={setCity} setCurrentPage={setCurrentPage} />
 			</Filters>
 			<JobsList>{renderedList}</JobsList>
@@ -169,38 +174,27 @@ const Cities = ({ setCity, setCurrentPage }) => {
 	);
 };
 
-const CityFilter = ({ setJobs, setIsLoading }) => {
+const LocationFilter = ({ setCity }) => {
 	const [location, setLocation] = useState("");
 
 	useEffect(() => {
-		if (!R.isEmpty(location)) {
-			const timeoutId = setTimeout(() => {
-				console.log(`fetching data...`);
-				fetch(
-					`https://api.allorigins.win/get?url=https://jobs.github.com/positions.json?location=${location}`
-				)
-					.then((res) => res.json())
-					.then((data) => JSON.parse(data.contents))
-					.then((jobs) => setJobs(jobs))
-					.catch((err) => {
-						console.log(err);
-					});
-			}, 500);
+		const timeoutId = setTimeout(() => {
+			setCity(location);
+		}, 500);
 
-			return () => {
-				clearTimeout(timeoutId);
-			};
-		}
+		return () => {
+			clearTimeout(timeoutId);
+		};
 	}, [location]);
 
 	return (
-		<div className="CityFilter">
-			<label className="CityFilter__label">Location</label>
-			<div className="CityFilter__input-container">
-				<img className="CityFilter__globe-icon" src={globeIcon} />
+		<div className="LocationFilter">
+			<label className="LocationFilter__label">Location</label>
+			<div className="LocationFilter__input-container">
+				<img className="LocationFilter__globe-icon" src={globeIcon} />
 				<input
-					className="CityFilter__input"
-					placeholder="City, state, zip code or country"
+					className="LocationFilter__input"
+					placeholder="City, state, or country"
 					value={location}
 					onChange={(e) => setLocation(e.target.value)}
 				/>
