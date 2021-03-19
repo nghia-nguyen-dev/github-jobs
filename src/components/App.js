@@ -301,53 +301,45 @@ const PageNav = ({ pages, currentPage, setCurrentPage }) => {
 	);
 };
 
-const Search = ({ setJobs, setIsLoading }) => {
+// utils
+const fetchData = (searchDescription, setJobs) => {
+	fetch(
+		`https://api.allorigins.win/get?url=https://jobs.github.com/positions.json?search=${searchDescription}`
+	)
+		.then((res) => res.json())
+		.then((data) => JSON.parse(data.contents))
+		.then((jobs) => setJobs(jobs))
+		.catch((err) => {
+			console.log(err);
+		});
+};
+
+const Search = ({ setJobs }) => {
 	const [searchDescription, setSearchDescription] = useState("");
-	const [submit, setSubmit] = useState(false);
 
 	useEffect(() => {
-		fetch(
-			`https://api.allorigins.win/get?url=https://jobs.github.com/positions.json?search=${searchDescription}`
-		)
-			.then((res) => res.json())
-			.then((data) => JSON.parse(data.contents))
-			.then((jobs) => setJobs(jobs))
-			.catch((err) => {
-				console.log(err);
-			});
+		fetchData(searchDescription, setJobs);
 	}, []);
 
-	useEffect(() => {
-		if (submit === true) {
-			fetch(
-				`https://api.allorigins.win/get?url=https://jobs.github.com/positions.json?search=${searchDescription}`
-			)
-				.then((res) => res.json())
-				.then((data) => JSON.parse(data.contents))
-				.then((jobs) => {
-					setJobs(jobs);
-					setSubmit(false);
-				})
-				.catch((err) => {
-					console.log(err);
-				});
-		}
-	}, [submit]);
+	const handleSubmit = (e) => {
+		e.preventDefault();
+		fetchData(searchDescription, setJobs);
+	};
 
 	return (
 		<div className="Search">
-			<div className="Search__input-container">
-				<img className="Search__globe-icon" src={globeIcon} />
-				<input
-					onChange={(e) => setSearchDescription(e.target.value)}
-					value={searchDescription}
-					className="Search__input"
-					placeholder="Title, companies, expertise or benefits"
-				></input>
-			</div>
-			<button onClick={() => setSubmit(true)} className="Search__btn">
-				Search
-			</button>
+			<form className="Search__form" onSubmit={handleSubmit}>
+				<div className="Search__input-container">
+					<img className="Search__globe-icon" src={globeIcon} />
+					<input
+						onChange={(e) => setSearchDescription(e.target.value)}
+						value={searchDescription}
+						className="Search__input"
+						placeholder="Title, companies, expertise or benefits"
+					></input>
+				</div>
+				<button className="Search__btn">Search</button>
+			</form>
 		</div>
 	);
 };
