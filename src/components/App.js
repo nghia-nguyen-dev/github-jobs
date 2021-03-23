@@ -112,6 +112,22 @@ const FullTime = ({ fullTime, setFullTime }) => {
 	);
 };
 
+const curryfullTimeFilter = R.curry((fullTime, jobs) => {
+	if (fullTime) {
+		return jobs.filter((job) => job.type === "Full Time");
+	}
+	return jobs;
+});
+
+const curryLocationFilter = R.curry((city, jobs) => {
+	if (!R.isEmpty(city)) {
+		return jobs.filter((job) =>
+			job.location.toLowerCase().includes(city.toLowerCase())
+		);
+	}
+	return jobs;
+});
+
 const Filters = ({ jobs, setPages, setCurrentPage }) => {
 	const [city, setCity] = useState("");
 	const [fullTime, setFullTime] = useState(false);
@@ -119,19 +135,12 @@ const Filters = ({ jobs, setPages, setCurrentPage }) => {
 	useEffect(() => {
 		setCurrentPage(0);
 		if (!R.isEmpty(jobs)) {
-			let temp = [...jobs];
-
-			if (fullTime) {
-				temp = temp.filter((job) => job.type === "Full Time");
-			}
-
-			if (!R.isEmpty(city)) {
-				temp = temp.filter((job) =>
-					job.location.toLowerCase().includes(city.toLowerCase())
-				);
-			}
-
-			R.pipe(R.splitEvery(config.jobsPerPage), setPages)(temp);
+			R.pipe(
+				curryfullTimeFilter(fullTime, R.__),
+				curryLocationFilter(city, R.__),
+				R.splitEvery(config.jobsPerPage),
+				setPages,
+			)(jobs);
 		}
 	}, [jobs, fullTime, city]);
 
