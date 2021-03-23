@@ -1,11 +1,11 @@
-.LocationFilter {
+.LocationInput {
 	font-size: 14px;
 	display: flex;
 	flex-direction: column;
 	margin-top: 30px;
 }
 
-.LocationFilter__input {
+.LocationInput__input {
 	border: none;
 	height: 42px;
 	width: 100%;
@@ -13,7 +13,7 @@
 	color: #b9bdcf;
 }
 
-.LocationFilter__input-container {
+.LocationInput__input-container {
 	background-color: white;
 	display: flex;
 	align-items: center;
@@ -21,13 +21,13 @@
 	padding: 0 16px;
 }
 
-.LocationFilter__globe-icon {
+.LocationInput__globe-icon {
 	height: 15px;
 	width: 15px;
 	margin-right: 10px;
 }
 
-.LocationFilter__label {
+.LocationInput__label {
 	text-transform: uppercase;
 	font-weight: bold;
 	margin-bottom: 14px;

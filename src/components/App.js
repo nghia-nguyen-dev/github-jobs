@@ -119,7 +119,7 @@ const curryfullTimeFilter = R.curry((fullTime, jobs) => {
 	return jobs;
 });
 
-const curryLocationFilter = R.curry((city, jobs) => {
+const curryLocationInput = R.curry((city, jobs) => {
 	if (!R.isEmpty(city)) {
 		return jobs.filter((job) =>
 			job.location.toLowerCase().includes(city.toLowerCase())
@@ -129,7 +129,7 @@ const curryLocationFilter = R.curry((city, jobs) => {
 });
 
 const Filters = ({ jobs, setPages, setCurrentPage }) => {
-	const [city, setCity] = useState("");
+	const [location, setLocation] = useState("");
 	const [fullTime, setFullTime] = useState(false);
 
 	useEffect(() => {
@@ -137,16 +137,16 @@ const Filters = ({ jobs, setPages, setCurrentPage }) => {
 		!R.isEmpty(jobs) &&
 			R.pipe(
 				curryfullTimeFilter(fullTime, R.__),
-				curryLocationFilter(city, R.__),
+				curryLocationInput(location, R.__),
 				R.splitEvery(config.jobsPerPage),
 				setPages
 			)(jobs);
-	}, [jobs, fullTime, city]);
+	}, [jobs, fullTime, location]);
 
 	return (
 		<div className="Filters">
 			<FullTime fullTime={fullTime} setFullTime={setFullTime} />
-			<LocationFilter setCity={setCity} />
+			<LocationInput setLocation={setLocation} />
 			{/* <Cities setCity={setCity} /> */}
 		</div>
 	);
@@ -305,29 +305,29 @@ const PageNav = ({ pages, currentPage, setCurrentPage }) => {
 // 	);
 // };
 
-const LocationFilter = ({ setCity }) => {
-	const [location, setLocation] = useState("");
+const LocationInput = ({ setLocation }) => {
+	const [input, setInput] = useState("");
 
 	useEffect(() => {
 		const timeoutId = setTimeout(() => {
-			setCity(location);
+			setLocation(input);
 		}, 500);
 
 		return () => {
 			clearTimeout(timeoutId);
 		};
-	}, [location]);
+	}, [input]);
 
 	return (
-		<div className="LocationFilter">
-			<label className="LocationFilter__label">Location</label>
-			<div className="LocationFilter__input-container">
-				<img className="LocationFilter__globe-icon" src={globeIcon} />
+		<div className="LocationInput">
+			<label className="LocationInput__label">Location</label>
+			<div className="LocationInput__input-container">
+				<img className="LocationInput__globe-icon" src={globeIcon} />
 				<input
-					className="LocationFilter__input"
+					className="LocationInput__input"
 					placeholder="City, state, or country"
-					value={location}
-					onChange={(e) => setLocation(e.target.value)}
+					value={input}
+					onChange={(e) => setInput(e.target.value)}
 				/>
 			</div>
 		</div>
