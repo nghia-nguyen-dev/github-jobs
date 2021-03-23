@@ -134,14 +134,13 @@ const Filters = ({ jobs, setPages, setCurrentPage }) => {
 
 	useEffect(() => {
 		setCurrentPage(0);
-		if (!R.isEmpty(jobs)) {
+		!R.isEmpty(jobs) &&
 			R.pipe(
 				curryfullTimeFilter(fullTime, R.__),
 				curryLocationFilter(city, R.__),
 				R.splitEvery(config.jobsPerPage),
-				setPages,
+				setPages
 			)(jobs);
-		}
 	}, [jobs, fullTime, city]);
 
 	return (
@@ -255,52 +254,52 @@ const PageNav = ({ pages, currentPage, setCurrentPage }) => {
 	);
 };
 
-const Cities = ({ setCity }) => {
-	const handleSelect = (e) => {
-		setCity(e.target.value);
-	};
+// const Cities = ({ setCity }) => {
+// 	const handleSelect = (e) => {
+// 		setCity(e.target.value);
+// 	};
 
-	return (
-		<div className="Cities" onChange={handleSelect}>
-			<div>
-				<input
-					className="Cities__input"
-					type="radio"
-					value="Boston"
-					name="city"
-				/>{" "}
-				Boston
-			</div>
-			<div>
-				<input
-					className="Cities__input"
-					type="radio"
-					value="Chicago"
-					name="city"
-				/>{" "}
-				Chicago
-			</div>
-			<div>
-				<input
-					className="Cities__input"
-					type="radio"
-					value="Toronto"
-					name="city"
-				/>{" "}
-				Toronto
-			</div>
-			<div>
-				<input
-					className="Cities__input"
-					type="radio"
-					value="Berlin"
-					name="city"
-				/>{" "}
-				Berlin
-			</div>
-		</div>
-	);
-};
+// 	return (
+// 		<div className="Cities" onChange={handleSelect}>
+// 			<div>
+// 				<input
+// 					className="Cities__input"
+// 					type="radio"
+// 					value="Boston"
+// 					name="city"
+// 				/>{" "}
+// 				Boston
+// 			</div>
+// 			<div>
+// 				<input
+// 					className="Cities__input"
+// 					type="radio"
+// 					value="Chicago"
+// 					name="city"
+// 				/>{" "}
+// 				Chicago
+// 			</div>
+// 			<div>
+// 				<input
+// 					className="Cities__input"
+// 					type="radio"
+// 					value="Toronto"
+// 					name="city"
+// 				/>{" "}
+// 				Toronto
+// 			</div>
+// 			<div>
+// 				<input
+// 					className="Cities__input"
+// 					type="radio"
+// 					value="Berlin"
+// 					name="city"
+// 				/>{" "}
+// 				Berlin
+// 			</div>
+// 		</div>
+// 	);
+// };
 
 const LocationFilter = ({ setCity }) => {
 	const [location, setLocation] = useState("");
@@ -410,7 +409,7 @@ const PostDate = ({ created_at, className }) => {
 };
 
 // utils
-const fetchData = (searchDescription, setJobs) => {
+const fetchData = (setJobs, searchDescription = "") => {
 	fetch(
 		`https://api.allorigins.win/get?url=https://jobs.github.com/positions.json?search=${searchDescription}`
 	)
@@ -426,12 +425,12 @@ const Search = ({ setJobs }) => {
 	const [searchDescription, setSearchDescription] = useState("");
 
 	useEffect(() => {
-		fetchData(searchDescription, setJobs);
+		fetchData(setJobs, searchDescription);
 	}, []);
 
 	const handleSubmit = (e) => {
 		e.preventDefault();
-		fetchData(searchDescription, setJobs);
+		fetchData(setJobs, searchDescription);
 	};
 
 	return (
