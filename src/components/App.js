@@ -139,7 +139,7 @@ const Filters = ({ jobs, setPages, setCurrentPage }) => {
 		<div className="Filters">
 			<FullTime fullTime={fullTime} setFullTime={setFullTime} />
 			<LocationFilter setCity={setCity} />
-			<Cities setCity={setCity} />
+			{/* <Cities setCity={setCity} /> */}
 		</div>
 	);
 };
