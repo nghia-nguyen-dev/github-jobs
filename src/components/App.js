@@ -258,53 +258,6 @@ const PageNav = ({ pages, currentPage, setCurrentPage }) => {
 	);
 };
 
-// const Cities = ({ setCity }) => {
-// 	const handleSelect = (e) => {
-// 		setCity(e.target.value);
-// 	};
-
-// 	return (
-// 		<div className="Cities" onChange={handleSelect}>
-// 			<div>
-// 				<input
-// 					className="Cities__input"
-// 					type="radio"
-// 					value="Boston"
-// 					name="city"
-// 				/>{" "}
-// 				Boston
-// 			</div>
-// 			<div>
-// 				<input
-// 					className="Cities__input"
-// 					type="radio"
-// 					value="Chicago"
-// 					name="city"
-// 				/>{" "}
-// 				Chicago
-// 			</div>
-// 			<div>
-// 				<input
-// 					className="Cities__input"
-// 					type="radio"
-// 					value="Toronto"
-// 					name="city"
-// 				/>{" "}
-// 				Toronto
-// 			</div>
-// 			<div>
-// 				<input
-// 					className="Cities__input"
-// 					type="radio"
-// 					value="Berlin"
-// 					name="city"
-// 				/>{" "}
-// 				Berlin
-// 			</div>
-// 		</div>
-// 	);
-// };
-
 const LocationInput = ({ setLocation }) => {
 	const [input, setInput] = useState("");
 
