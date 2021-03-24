@@ -3,7 +3,6 @@ import globeIcon from "assets/icons/globe.svg";
 import workIcon from "assets/icons/work.svg";
 import clockIcon from "assets/icons/clock.svg";
 import * as R from "ramda";
-import mockData from "utils/mockData.json";
 import chevronLeft from "assets/icons/chevron_left.svg";
 import chevronRight from "assets/icons/chevron_right.svg";
 import dots from "assets/icons/dots.svg";
@@ -144,7 +143,6 @@ const Filters = ({ jobs, setPages, setCurrentPage }) => {
 	}, [fullTime]);
 
 	useEffect(() => {
-		// setCurrentPage(0);
 		!R.isEmpty(jobs) &&
 			R.pipe(
 				curryfullTimeFilter(fullTime, R.__),
@@ -157,8 +155,7 @@ const Filters = ({ jobs, setPages, setCurrentPage }) => {
 	return (
 		<div className="Filters">
 			<FullTime fullTime={fullTime} setFullTime={setFullTime} />
-			<LocationInput setLocation={setLocation} />
-			{/* <Cities setCity={setCity} /> */}
+			<LocationInput setLocation={setLocation} setCurrentPage={setCurrentPage}/>
 		</div>
 	);
 };
@@ -280,12 +277,13 @@ const PageNav = ({ pages, currentPage, setCurrentPage }) => {
 	);
 };
 
-const LocationInput = ({ setLocation }) => {
+const LocationInput = ({ setLocation, setCurrentPage }) => {
 	const [input, setInput] = useState("");
 
 	useEffect(() => {
 		const timeoutId = setTimeout(() => {
 			setLocation(input);
+			setCurrentPage(0)
 		}, 500);
 
 		return () => {
@@ -412,7 +410,7 @@ const Search = ({ setJobs }) => {
 		<div className="Search">
 			<form className="Search__form" onSubmit={handleSubmit}>
 				<div className="Search__input-container">
-					<img className="Search__globe-icon" src={globeIcon} />
+					<img className="Search__work-icon" src={workIcon} />
 					<input
 						onChange={(e) => setSearchDescription(e.target.value)}
 						value={searchDescription}
