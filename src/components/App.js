@@ -133,6 +133,17 @@ const Filters = ({ jobs, setPages, setCurrentPage }) => {
 	const [fullTime, setFullTime] = useState(false);
 
 	useEffect(() => {
+		const data = localStorage.getItem("full-time");
+		if (data) {
+			setFullTime(JSON.parse(data));
+		}
+	}, []);
+
+	useEffect(() => {
+		localStorage.setItem("full-time", fullTime);
+	}, [fullTime]);
+
+	useEffect(() => {
 		// setCurrentPage(0);
 		!R.isEmpty(jobs) &&
 			R.pipe(
