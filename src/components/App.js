@@ -133,7 +133,7 @@ const Filters = ({ jobs, setPages, setCurrentPage }) => {
 	const [fullTime, setFullTime] = useState(false);
 
 	useEffect(() => {
-		setCurrentPage(0);
+		// setCurrentPage(0);
 		!R.isEmpty(jobs) &&
 			R.pipe(
 				curryfullTimeFilter(fullTime, R.__),
@@ -156,6 +156,17 @@ const Controller = ({ setCurrentJob }) => {
 	const [jobs, setJobs] = useState([]);
 	const [pages, setPages] = useState([]);
 	const [currentPage, setCurrentPage] = useState(0);
+
+	useEffect(() => {
+		const data = localStorage.getItem("current-page");
+		if (data) {
+			setCurrentPage(JSON.parse(data));
+		}
+	}, []);
+
+	useEffect(() => {
+		localStorage.setItem("current-page", currentPage);
+	}, [currentPage]);
 
 	useEffect(() => {
 		fetchData(setJobs);
