@@ -155,7 +155,10 @@ const Filters = ({ jobs, setPages, setCurrentPage }) => {
 	return (
 		<div className="Filters">
 			<FullTime fullTime={fullTime} setFullTime={setFullTime} />
-			<LocationInput setLocation={setLocation} setCurrentPage={setCurrentPage}/>
+			<LocationInput
+				setLocation={setLocation}
+				setCurrentPage={setCurrentPage}
+			/>
 		</div>
 	);
 };
@@ -167,9 +170,7 @@ const Controller = ({ setCurrentJob }) => {
 
 	useEffect(() => {
 		const data = localStorage.getItem("current-page");
-		if (data) {
-			setCurrentPage(JSON.parse(data));
-		}
+		setCurrentPage(JSON.parse(data));
 	}, []);
 
 	useEffect(() => {
@@ -228,7 +229,6 @@ const JobsList = ({ pages, currentPage, setCurrentJob }) => {
 const PageNav = ({ pages, currentPage, setCurrentPage }) => {
 	const handleNext = () => {
 		if (currentPage === pages.length - 1) {
-			console.log(`last page sir!`);
 			return;
 		}
 		setCurrentPage((prev) => prev + 1);
@@ -236,7 +236,6 @@ const PageNav = ({ pages, currentPage, setCurrentPage }) => {
 
 	const handlePrev = () => {
 		if (currentPage === 0) {
-			console.log(`first page sir!`);
 			return;
 		}
 		setCurrentPage((prev) => prev - 1);
@@ -278,17 +277,19 @@ const PageNav = ({ pages, currentPage, setCurrentPage }) => {
 };
 
 const LocationInput = ({ setLocation, setCurrentPage }) => {
-	const [input, setInput] = useState("");
+	const [input, setInput] = useState(null);
 
 	useEffect(() => {
-		const timeoutId = setTimeout(() => {
-			setLocation(input);
-			setCurrentPage(0)
-		}, 500);
+		if (input !== null) {
+			const timeoutId = setTimeout(() => {
+				setLocation(input);
+				setCurrentPage(0);
+			}, 500);
 
-		return () => {
-			clearTimeout(timeoutId);
-		};
+			return () => {
+				clearTimeout(timeoutId);
+			};
+		}
 	}, [input]);
 
 	return (
