@@ -9,7 +9,7 @@ export const toggleFullTime = () => ({ type: "TOGGLE_FULLTIME" });
 export const setLocation = (location) => ({ type: "SET_LOCATION", location });
 
 // REDUCER
-export default filtersReducer = (state = init, action) => {
+const filtersReducer = (state = init, action) => {
 	switch (action.type) {
 		case "TOGGLE_FULLTIME":
 			return {
@@ -26,3 +26,5 @@ export default filtersReducer = (state = init, action) => {
 			return state;
 	}
 };
+
+export default filtersReducer
