@@ -1,4 +1,3 @@
-// INIT
 const init = {
 	isFullTime: false,
 	location: "",

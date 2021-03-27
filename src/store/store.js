@@ -1,9 +1,9 @@
-import {createStore} from 'redux'
-import filtersReducer from 'store/filters'
+import { createStore } from "redux";
+import rootReducer from "./combineReducers";
 
-const store = createStore(filtersReducer)
+const store = createStore(rootReducer);
 store.subscribe(() => {
-    console.log(store.getState())
-})
+	console.log(store.getState());
+});
 
-export default store
+export default store;
