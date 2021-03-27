@@ -1,6 +1,11 @@
-const FullTime = ({ fullTime, setFullTime }) => {
+import { toggleFullTime } from "store/filters";
+import { useDispatch } from "react-redux";
+
+const FullTime = () => {
+	const dispatch = useDispatch();
+
 	const handleCheckbox = (e) => {
-		setFullTime(e.target.checked);
+		dispatch(toggleFullTime());
 	};
 
 	return (
@@ -9,7 +14,6 @@ const FullTime = ({ fullTime, setFullTime }) => {
 				className="FullTime__checkbox"
 				type="checkbox"
 				id="Fulltime"
-				checked={fullTime}
 				onChange={handleCheckbox}
 			/>
 			<label htmlFor="Fulltime">Fulltime</label>
