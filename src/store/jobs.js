@@ -1,11 +1,11 @@
 // ACTION CREATOR
-export const addJobs = (jobs) => ({ type: "ADD_JOBS", jobs });
+export const loadJobs = jobs => ({ type: "LOAD_JOBS", jobs });
 
 // REDUCER
 const jobsReducer = (state = [], action) => {
 	switch (action.type) {
-		case "ADD_JOBS":
-			return [...state, action.jobs];
+		case "LOAD_JOBS":
+			return action.jobs;
 
 		default:
 			return state;

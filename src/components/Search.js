@@ -1,13 +1,27 @@
-import { useState } from 'react'
-import {fetchData} from 'utils/helpers'
-import workIcon from 'assets/icons/work.svg'
+import { useState } from "react";
+import { useDispatch } from "react-redux";
+import workIcon from "assets/icons/work.svg";
+import { loadJobs } from "store/jobs";
 
-const Search = ({ setJobs }) => {
+const Search = () => {
 	const [searchDescription, setSearchDescription] = useState("");
+	const dispatch = useDispatch();
 
-	const handleSubmit = (e) => {
+	const fetchData = (searchDescription = "") => {
+		fetch(
+			`https://api.allorigins.win/get?url=https://jobs.github.com/positions.json?search=${searchDescription}`
+		)
+			.then(res => res.json())
+			.then(data => JSON.parse(data.contents))
+			.then(jobs => dispatch(loadJobs(jobs)))
+			.catch(err => {
+				console.log(err);
+			});
+	};
+
+	const handleSubmit = e => {
 		e.preventDefault();
-		fetchData(setJobs, searchDescription);
+		fetchData(searchDescription);
 	};
 
 	return (
@@ -16,7 +30,7 @@ const Search = ({ setJobs }) => {
 				<div className="Search__input-container">
 					<img className="Search__work-icon" src={workIcon} />
 					<input
-						onChange={(e) => setSearchDescription(e.target.value)}
+						onChange={e => setSearchDescription(e.target.value)}
 						value={searchDescription}
 						className="Search__input"
 						placeholder="Title, companies, expertise or benefits"
@@ -28,4 +42,4 @@ const Search = ({ setJobs }) => {
 	);
 };
 
-export default Search
+export default Search;

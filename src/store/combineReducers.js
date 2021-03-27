@@ -1,6 +1,6 @@
 import {combineReducers} from 'redux'
-import filtersReducer from './filters'
-import jobsReducer from 'store/jobs'
+import filtersReducer from 'store/filters'
+import jobsReducer from './jobs'
 
 const rootReducer = combineReducers({
     filters: filtersReducer,

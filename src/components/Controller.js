@@ -6,33 +6,24 @@ import Filters from "components/Filters";
 import JobsView from "components/JobsView";
 
 const Controller = ({ setCurrentJob }) => {
-	const [jobs, setJobs] = useState([]);
 	const [pages, setPages] = useState([]);
 	const [currentPage, setCurrentPage] = useState(0);
 
-	useEffect(() => {
-		const data = localStorage.getItem("current-page");
-		setCurrentPage(JSON.parse(data));
-	}, []);
+	// useEffect(() => {
+	// 	const data = localStorage.getItem("current-page");
+	// 	setCurrentPage(JSON.parse(data));
+	// }, []);
 
-	useEffect(() => {
-		localStorage.setItem("current-page", currentPage);
-	}, [currentPage]);
-
-	useEffect(() => {
-		fetchData(setJobs);
-	}, []);
+	// useEffect(() => {
+	// 	localStorage.setItem("current-page", currentPage);
+	// }, [currentPage]);
 
 	return (
 		<div className="Controller">
 			<Banner>
-				<Search setJobs={setJobs} />
+				<Search />
 			</Banner>
-			<Filters
-				jobs={jobs}
-				setPages={setPages}
-				setCurrentPage={setCurrentPage}
-			/>
+			<Filters />
 			<JobsView
 				pages={pages}
 				setCurrentJob={setCurrentJob}
