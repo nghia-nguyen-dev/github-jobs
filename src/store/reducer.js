@@ -4,6 +4,7 @@ const init = {
 		location: "",
 	},
 	jobs: [],
+	selectedJob: {},
 	currentPage: 0,
 };
 
@@ -25,7 +26,7 @@ const reducer = (state = init, action) => {
 					...state.filters,
 					location: action.location,
 				},
-				currentPage: 0
+				currentPage: 0,
 			};
 
 		case "LOAD_JOBS":
@@ -33,6 +34,12 @@ const reducer = (state = init, action) => {
 				...state,
 				jobs: action.jobs,
 			};
+
+		case "SELECT_JOB":
+			return {
+				...state,
+				selectedJob: action.job
+			}
 
 		case "CHANGE_PAGE":
 			return {

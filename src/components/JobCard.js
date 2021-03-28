@@ -3,14 +3,17 @@ import CompanyName from "components/CompanyName";
 import JobType from "components/JobType";
 import Location from "components/Location";
 import PostDate from "components/PostDate";
+import { useDispatch } from "react-redux";
+import { selectJob } from "store/actions";
 
 const JobCard = ({
-	setCurrentJob,
 	job: { company_logo, company, title, type, location, created_at },
 	job,
 }) => {
+	const dispatch = useDispatch();
+
 	const handleClick = () => {
-		setCurrentJob(job);
+		dispatch(selectJob(job));
 		window.scroll({
 			top: 0,
 			left: 0,
