@@ -6,6 +6,7 @@ import { useDispatch, useSelector } from "react-redux";
 const LocationInput = () => {
 	const dispatch = useDispatch();
 	const input = useSelector(state => state.location);
+	let timeoutId = null;
 
 	// useEffect(() => {
 	// 	if (input !== null) {
@@ -20,8 +21,12 @@ const LocationInput = () => {
 	// 	}
 	// }, [input]);
 
+
 	const handleInput = e => {
-		dispatch(setLocation(e.target.value));
+		clearInterval(timeoutId);
+		timeoutId = setTimeout(() => {
+			dispatch(setLocation(e.target.value));
+		}, 400);
 	};
 
 	return (
