@@ -1,5 +1,7 @@
 .App {
     padding: 120px;
     font-family: Arial, Helvetica, sans-serif;
-    background-color: #F6F7FB;;
+    background-color: #F6F7FB;
+    max-width: 1440px;
+    margin: 0 auto;
 }

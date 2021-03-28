@@ -3,8 +3,7 @@ import { useDispatch } from "react-redux";
 import workIcon from "assets/icons/work.svg";
 import { loadJobs } from "store/actions";
 import { useEffect } from "react";
-import * as R from "ramda";
-import config from "utils/config";
+
 
 const Search = () => {
 	const [searchDescription, setSearchDescription] = useState("");

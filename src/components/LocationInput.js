@@ -6,7 +6,6 @@ import { useDispatch, useSelector } from "react-redux";
 const LocationInput = () => {
 	const dispatch = useDispatch();
 	const input = useSelector(state => state.location);
-	// const [input, setInput] = useState(null);
 
 	// useEffect(() => {
 	// 	if (input !== null) {
