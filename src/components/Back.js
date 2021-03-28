@@ -1,9 +1,11 @@
 import arrowLeft from "assets/icons/left_arrow.svg";
+import { clearJob } from "store/actions";
+import { useDispatch } from "react-redux";
 
-
-const Back = ({ setCurrentJob }) => {
+const Back = () => {
+	const dispatch = useDispatch();
 	const handleClick = () => {
-		setCurrentJob({});
+		dispatch(clearJob());
 	};
 
 	return (

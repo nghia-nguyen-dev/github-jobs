@@ -6,7 +6,7 @@ import PostDate from "components/PostDate";
 import CompanyLogo from "components/CompanyLogo";
 import CompanyName from "components/CompanyName";
 import Location from "components/Location";
-import {useSelector} from 'react-redux'
+import { useSelector } from "react-redux";
 
 const JobPage = () => {
 	const {
@@ -24,7 +24,7 @@ const JobPage = () => {
 		<div className="JobPage">
 			<Header className="JobPage__header" />
 			<div className="JobPage__contact">
-				<Back setCurrentJob={setCurrentJob} />
+				<Back />
 				<h4>How to apply</h4>
 				<p
 					className="JobPage__contact"

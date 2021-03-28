@@ -42,6 +42,12 @@ const reducer = (state = init, action) => {
 				selectedJob: action.job,
 			};
 
+		case "CLEAR_JOB":
+			return {
+				...state,
+				selectedJob: {},
+			};
+
 		case "CHANGE_PAGE":
 			return {
 				...state,
