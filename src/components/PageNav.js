@@ -1,24 +1,33 @@
-import chevronLeft from 'assets/icons/chevron_left.svg'
-import chevronRight from 'assets/icons/chevron_right.svg'
+import chevronLeft from "assets/icons/chevron_left.svg";
+import chevronRight from "assets/icons/chevron_right.svg";
+import { useDispatch, useSelector } from "react-redux";
+import { changePage, setPage } from "store/actions";
+import { range } from "ramda";
 
-const PageNav = ({ pages, currentPage, setCurrentPage }) => {
+const PageNav = ({}) => {
+	const dispatch = useDispatch();
+	const jobs = useSelector(state => state.jobs);
+	const currentPage = useSelector(state => state.currentPage);
+
 	const handleNext = () => {
 		if (currentPage === pages.length - 1) {
 			return;
 		}
-		setCurrentPage((prev) => prev + 1);
+		dispatch(changePage(1));
 	};
 
 	const handlePrev = () => {
 		if (currentPage === 0) {
 			return;
 		}
-		setCurrentPage((prev) => prev - 1);
+		dispatch(changePage(-1));
 	};
 
-	const handleClick = (index) => {
-		setCurrentPage(index);
+	const handleClick = index => {
+		dispatch(setPage(index));
 	};
+
+	const pages = range(0, jobs.length / 5);
 
 	const PageBlocks = pages.map((job, index) => {
 		const isActive = index === currentPage ? "active" : "";
@@ -51,4 +60,4 @@ const PageNav = ({ pages, currentPage, setCurrentPage }) => {
 	);
 };
 
-export default PageNav
+export default PageNav;

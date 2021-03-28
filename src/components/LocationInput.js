@@ -1,12 +1,11 @@
 import { useState, useEffect } from "react";
 import globeIcon from "assets/icons/globe.svg";
-import {setLocation} from 'store/filters'
-import {useDispatch, useSelector} from 'react-redux'
-
+import { setLocation } from "store/actions";
+import { useDispatch, useSelector } from "react-redux";
 
 const LocationInput = () => {
-	const dispatch = useDispatch()
-	const input = useSelector(state => state.location)
+	const dispatch = useDispatch();
+	const input = useSelector(state => state.location);
 	// const [input, setInput] = useState(null);
 
 	// useEffect(() => {
@@ -22,9 +21,9 @@ const LocationInput = () => {
 	// 	}
 	// }, [input]);
 
-	const handleInput = (e) => {
-		dispatch(setLocation(e.target.value))
-	}
+	const handleInput = e => {
+		dispatch(setLocation(e.target.value));
+	};
 
 	return (
 		<div className="LocationInput">

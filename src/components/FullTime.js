@@ -1,4 +1,4 @@
-import { toggleFullTime } from "store/filters";
+import { toggleFullTime } from "store/actions";
 import { useDispatch } from "react-redux";
 
 const FullTime = () => {

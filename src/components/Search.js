@@ -1,8 +1,10 @@
 import { useState } from "react";
 import { useDispatch } from "react-redux";
 import workIcon from "assets/icons/work.svg";
-import { loadJobs } from "store/jobs";
+import { loadJobs } from "store/actions";
 import { useEffect } from "react";
+import * as R from "ramda";
+import config from "utils/config";
 
 const Search = () => {
 	const [searchDescription, setSearchDescription] = useState("");
@@ -14,7 +16,17 @@ const Search = () => {
 		)
 			.then(res => res.json())
 			.then(data => JSON.parse(data.contents))
-			.then(jobs => dispatch(loadJobs(jobs)))
+			.then(jobs => {
+				dispatch(loadJobs(jobs));
+
+				// console.log(addPages);
+				// // dispatch(addPages(R.splitEvery(config.jobsPerPage)(jobs)))
+				// R.pipe(
+				// 	R.splitEvery(config.jobsPerPage),
+				// 	addPages,
+				// 	dispatch
+				// )(jobs)
+			})
 			.catch(err => {
 				console.log(err);
 			});
