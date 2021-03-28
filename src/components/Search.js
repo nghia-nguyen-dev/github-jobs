@@ -2,6 +2,7 @@ import { useState } from "react";
 import { useDispatch } from "react-redux";
 import workIcon from "assets/icons/work.svg";
 import { loadJobs } from "store/jobs";
+import { useEffect } from "react";
 
 const Search = () => {
 	const [searchDescription, setSearchDescription] = useState("");
@@ -18,6 +19,10 @@ const Search = () => {
 				console.log(err);
 			});
 	};
+
+	useEffect(() => {
+		fetchData(searchDescription);
+	}, []);
 
 	const handleSubmit = e => {
 		e.preventDefault();
