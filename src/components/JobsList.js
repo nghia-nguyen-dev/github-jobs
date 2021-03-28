@@ -1,18 +1,18 @@
 import JobCard from "components/JobCard";
 import { useSelector } from "react-redux";
 import * as R from "ramda";
-import { curryfullTimeFilter, curryLocationInput } from "utils/helpers";
+import { filterByType, filterByLocation } from "utils/helpers";
 import config from "utils/config";
 
 const JobsList = () => {
 	const jobs = useSelector(state => state.jobs);
-	const fullTime = useSelector(state => state.filters.isFullTime);
+	const isFullTime = useSelector(state => state.filters.isFullTime);
 	const location = useSelector(state => state.filters.location);
-	const currentPage = useSelector(state => state.currentPage)
+	const currentPage = useSelector(state => state.currentPage);
 
 	const pages = R.pipe(
-		curryfullTimeFilter(fullTime, R.__),
-		curryLocationInput(location, R.__),
+		filterByType(isFullTime),
+		filterByLocation(location),
 		R.splitEvery(config.jobsPerPage)
 	)(jobs);
 

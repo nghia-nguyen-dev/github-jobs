@@ -4,7 +4,6 @@ import workIcon from "assets/icons/work.svg";
 import { loadJobs } from "store/actions";
 import { useEffect } from "react";
 
-
 const Search = () => {
 	const [searchDescription, setSearchDescription] = useState("");
 	const dispatch = useDispatch();

@@ -3,11 +3,13 @@ import chevronRight from "assets/icons/chevron_right.svg";
 import { useDispatch, useSelector } from "react-redux";
 import { changePage, setPage } from "store/actions";
 import { range } from "ramda";
+import config from "utils/config";
 
-const PageNav = ({}) => {
+const PageNav = () => {
 	const dispatch = useDispatch();
 	const jobs = useSelector(state => state.jobs);
 	const currentPage = useSelector(state => state.currentPage);
+	const pages = range(0, jobs.length / config.jobsPerPage);
 
 	const handleNext = () => {
 		if (currentPage === pages.length - 1) {
@@ -27,14 +29,12 @@ const PageNav = ({}) => {
 		dispatch(setPage(index));
 	};
 
-	const pages = range(0, jobs.length / 5);
-
 	const PageBlocks = pages.map((job, index) => {
-		const isActive = index === currentPage ? "active" : "";
-
 		return (
 			<div
-				className={`PageNav__number ${isActive}`}
+				className={`PageNav__number ${
+					index === currentPage && "active"
+				}`}
 				onClick={() => handleClick(index)}
 				key={index}
 			>
