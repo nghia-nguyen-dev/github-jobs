@@ -33,13 +33,14 @@ const reducer = (state = init, action) => {
 			return {
 				...state,
 				jobs: action.jobs,
+				currentPage: 0,
 			};
 
 		case "SELECT_JOB":
 			return {
 				...state,
-				selectedJob: action.job
-			}
+				selectedJob: action.job,
+			};
 
 		case "CHANGE_PAGE":
 			return {
