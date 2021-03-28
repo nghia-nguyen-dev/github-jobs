@@ -1,4 +1,3 @@
-import { useState, useEffect } from "react";
 import globeIcon from "assets/icons/globe.svg";
 import { setLocation } from "store/actions";
 import { useDispatch, useSelector } from "react-redux";
@@ -7,20 +6,6 @@ const LocationInput = () => {
 	const dispatch = useDispatch();
 	const input = useSelector(state => state.location);
 	let timeoutId = null;
-
-	// useEffect(() => {
-	// 	if (input !== null) {
-	// 		const timeoutId = setTimeout(() => {
-	// 			setLocation(input);
-	// 			setCurrentPage(0);
-	// 		}, 500);
-
-	// 		return () => {
-	// 			clearTimeout(timeoutId);
-	// 		};
-	// 	}
-	// }, [input]);
-
 
 	const handleInput = e => {
 		clearInterval(timeoutId);

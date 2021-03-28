@@ -6,9 +6,10 @@ import PostDate from "components/PostDate";
 import CompanyLogo from "components/CompanyLogo";
 import CompanyName from "components/CompanyName";
 import Location from "components/Location";
+import {useSelector} from 'react-redux'
 
-const JobPage = ({
-	currentJob: {
+const JobPage = () => {
+	const {
 		title,
 		type,
 		created_at,
@@ -17,9 +18,8 @@ const JobPage = ({
 		location,
 		description,
 		how_to_apply,
-	},
-	setCurrentJob,
-}) => {
+	} = useSelector(state => state.selectedJob);
+
 	return (
 		<div className="JobPage">
 			<Header className="JobPage__header" />
