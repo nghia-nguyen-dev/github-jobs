@@ -1,0 +1,27 @@
+{
+  "files": {
+    "main.css": "/github-jobs/static/css/main.8fa4aa8e.chunk.css",
+    "main.js": "/github-jobs/static/js/main.6746384a.chunk.js",
+    "main.js.map": "/github-jobs/static/js/main.6746384a.chunk.js.map",
+    "runtime-main.js": "/github-jobs/static/js/runtime-main.0d363675.js",
+    "runtime-main.js.map": "/github-jobs/static/js/runtime-main.0d363675.js.map",
+    "static/js/2.ab91618b.chunk.js": "/github-jobs/static/js/2.ab91618b.chunk.js",
+    "static/js/2.ab91618b.chunk.js.map": "/github-jobs/static/js/2.ab91618b.chunk.js.map",
+    "index.html": "/github-jobs/index.html",
+    "static/css/main.8fa4aa8e.chunk.css.map": "/github-jobs/static/css/main.8fa4aa8e.chunk.css.map",
+    "static/js/2.ab91618b.chunk.js.LICENSE.txt": "/github-jobs/static/js/2.ab91618b.chunk.js.LICENSE.txt",
+    "static/media/index.css": "/github-jobs/static/media/backgroundImg.c8427568.png",
+    "static/media/chevron_left.79c0cebb.svg": "/github-jobs/static/media/chevron_left.79c0cebb.svg",
+    "static/media/chevron_right.21a91ffd.svg": "/github-jobs/static/media/chevron_right.21a91ffd.svg",
+    "static/media/clock.12a9be42.svg": "/github-jobs/static/media/clock.12a9be42.svg",
+    "static/media/globe.7cffc040.svg": "/github-jobs/static/media/globe.7cffc040.svg",
+    "static/media/left_arrow.5548463e.svg": "/github-jobs/static/media/left_arrow.5548463e.svg",
+    "static/media/work.7bcd0362.svg": "/github-jobs/static/media/work.7bcd0362.svg"
+  },
+  "entrypoints": [
+    "static/js/runtime-main.0d363675.js",
+    "static/js/2.ab91618b.chunk.js",
+    "static/css/main.8fa4aa8e.chunk.css",
+    "static/js/main.6746384a.chunk.js"
+  ]
+}
