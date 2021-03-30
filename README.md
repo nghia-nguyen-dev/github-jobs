@@ -1,30 +1,15 @@
-# Random Quote Generator
-
-Random quote generator from prominent figures.
-
-[**VIEW DEMO**](https://nghia-nguyen-dev.github.io/random-quote-gen)
-
-## Features
-
--   View more quotes from the author
--   Fetch a random quote from a different author
-
-## Tech
-
--   html
--   css
--   javascript
--   React
 # Github jobs page
 
-Random quote generator from prominent figures.
+Simple page to search for github jobs.
 
 [**VIEW DEMO**](https://nghia-nguyen-dev.github.io/github-jobs)
 
 ## Features
 
--   View more quotes from the author
--   Fetch a random quote from a different author
+-   Search for a job base on title, companies etc
+-   Max number of jobs fetch from API is 50 where each page shows 5
+-   Able to filter jobs by full time position or location
+-   Clicking on a job will show more details and how to apply
 
 ## Tech
 
@@ -34,3 +19,7 @@ Random quote generator from prominent figures.
 -   react
 -   redux
 -   ramda.js
+
+## API
+
+-   Github Jobs

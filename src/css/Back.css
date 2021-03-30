@@ -1,0 +1,16 @@
+.Back {
+	color: #1e86ff;
+	display: flex;
+	align-items: center;
+	grid-column: 1/3;
+	margin-bottom: 142px;
+}
+
+.Back__arrow {
+	width: 30px;
+	margin-right: 12px;
+}
+
+.Back:hover {
+	cursor: pointer;
+}

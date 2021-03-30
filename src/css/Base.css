@@ -1,0 +1,20 @@
+h1 {
+	font-weight: bold;
+}
+
+h2 {
+	font-size: 14px;
+	font-weight: bold;
+	margin-top: 4px;
+}
+
+h4 {
+	text-transform: uppercase;
+	font-weight: bold;
+	color: #b9bdcf;
+	font-size: 14px;
+	margin-bottom: 24px;
+	letter-spacing: 1px;
+}
+
+

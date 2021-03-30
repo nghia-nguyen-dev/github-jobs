@@ -1,0 +1,17 @@
+.CompanyLogo {
+	object-fit: contain;
+	object-position: center;
+	border-radius: 4px;
+}
+
+.CompanyLogo--reg {
+	width: 90px;
+	height: 90px;
+	margin-right: 16px;
+}
+
+.CompanyLogo--sm {
+	width: 42px;
+	height: 42px;
+	margin-right: 12px;
+}

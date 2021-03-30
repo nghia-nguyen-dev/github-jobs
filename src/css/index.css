@@ -1,5 +1,7 @@
 @import "css/reset";
+@import "css/Base";
 @import "css/App";
+@import "css/Back";
 @import "css/Banner";
 @import "css/Search";
 @import "css/JobCard";
@@ -12,128 +14,5 @@
 @import "css/JobType";
 @import "css/PostDate";
 @import "css/Location";
-
-h1 {
-	font-weight: bold;
-}
-
-h2 {
-	font-size: 14px;
-	font-weight: bold;
-	margin-top: 4px;
-}
-
-h4 {
-	text-transform: uppercase;
-	font-weight: bold;
-	color: #b9bdcf;
-	font-size: 14px;
-	margin-bottom: 24px;
-	letter-spacing: 1px;
-}
-
-.CompanyLogo {
-	object-fit: contain;
-	object-position: center;
-	border-radius: 4px;
-}
-
-.CompanyLogo--reg {
-	width: 90px;
-	height: 90px;
-	margin-right: 16px;
-}
-
-.CompanyLogo--sm {
-	width: 42px;
-	height: 42px;
-	margin-right: 12px;
-}
-
-.CompanyName {
-	color: #334680;
-}
-
-.CompanyName--sm {
-	font-size: 14px;
-}
-
-.CompanyName--reg {
-	font-size: 18px;
-}
-
-.JobPage {
-	display: grid;
-	grid-template-columns: 1fr 2.2fr;
-	gap: 0 30px;
-}
-
-.JobPage__description {
-	margin-top: 35px;
-	color: #334680;
-	line-height: 24px;
-	max-width: 730px;
-}
-
-.JobPage__description > h2,
-.JobPage__description > h3,
-.JobPage__description strong {
-	margin: 24px 0;
-}
-
-.JobPage__contact p {
-	line-height: 24px;
-	max-width: 415px;
-}
-
-.JobPage__description strong {
-	display: block;
-}
-
-.JobPage__header {
-	grid-column: 1/3;
-	margin-bottom: 65px;
-}
-
-.JobPage__title {
-	font-size: 24px;
-	color: #334680;
-}
-
-.JobType--JobPage {
-	margin-left: 16px;
-}
-
-.JobPage__flex-grp {
-	display: flex;
-}
-
-.JobPage__header-content {
-	margin-bottom: 35px;
-}
-
-.PostDate--JobPage {
-	padding: 0;
-	margin-top: 8px;
-}
-
-.JobPage__job-description {
-	grid-column: 2/3;
-}
-
-.Back {
-	color: #1e86ff;
-	display: flex;
-	align-items: center;
-	grid-column: 1/3;
-	margin-bottom: 142px;
-}
-
-.Back:hover {
-	cursor: pointer;
-}
-
-.Back__arrow {
-	width: 30px;
-	margin-right: 12px;
-}
+@import "css/CompanyLogo";
+@import "css/CompanyName";
