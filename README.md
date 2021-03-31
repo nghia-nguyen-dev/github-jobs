@@ -23,3 +23,13 @@ Simple page to search for github jobs.
 ## API
 
 -   Github Jobs
+
+## Goals
+
+-   Get familiar setting up redux
+-   Get familiar working with redux and how it integrates with react
+-   Get familiar with managing a global state
+
+### Notes/observation
+
+-   Re-rendering in redux is very efficient and is more predictable vs react components

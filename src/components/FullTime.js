@@ -4,7 +4,7 @@ import { useDispatch } from "react-redux";
 const FullTime = () => {
 	const dispatch = useDispatch();
 
-	const handleCheckbox = (e) => {
+	const handleCheckbox = e => {
 		dispatch(toggleFullTime());
 	};
 
