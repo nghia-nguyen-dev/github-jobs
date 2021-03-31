@@ -16,6 +16,7 @@
 .JobCard__primary-info {
 	display: flex;
 	flex-direction: column;
+	max-width: 323px;
 }
 
 .JobCard__secondary-info {

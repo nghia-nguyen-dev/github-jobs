@@ -5,7 +5,7 @@ const PostDate = ({ created_at, className }) => {
 	return (
 		<div className={`PostDate PostDate--${className}`}>
 			<img className="PostDate__clock-icon" src={clockIcon} />
-			<p>{daysSincePost(created_at)} days ago</p>
+			<p>{daysSincePost(created_at)}d</p>
 		</div>
 	);
 };
