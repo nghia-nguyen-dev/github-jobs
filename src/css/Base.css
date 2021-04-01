@@ -1,5 +1,7 @@
 h1 {
 	font-weight: 600;
+	font-size: 32px;
+	letter-spacing: -0.7px;
 }
 
 h2 {
@@ -16,5 +18,3 @@ h4 {
 	margin-bottom: 24px;
 	letter-spacing: 1px;
 }
-
-
