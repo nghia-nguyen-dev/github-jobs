@@ -1,6 +1,6 @@
 {
   "files": {
-    "main.css": "/github-jobs/static/css/main.878dbc04.chunk.css",
+    "main.css": "/github-jobs/static/css/main.51aa452b.chunk.css",
     "main.js": "/github-jobs/static/js/main.11816a71.chunk.js",
     "main.js.map": "/github-jobs/static/js/main.11816a71.chunk.js.map",
     "runtime-main.js": "/github-jobs/static/js/runtime-main.0d363675.js",
@@ -8,7 +8,7 @@
     "static/js/2.a174df73.chunk.js": "/github-jobs/static/js/2.a174df73.chunk.js",
     "static/js/2.a174df73.chunk.js.map": "/github-jobs/static/js/2.a174df73.chunk.js.map",
     "index.html": "/github-jobs/index.html",
-    "static/css/main.878dbc04.chunk.css.map": "/github-jobs/static/css/main.878dbc04.chunk.css.map",
+    "static/css/main.51aa452b.chunk.css.map": "/github-jobs/static/css/main.51aa452b.chunk.css.map",
     "static/js/2.a174df73.chunk.js.LICENSE.txt": "/github-jobs/static/js/2.a174df73.chunk.js.LICENSE.txt",
     "static/media/index.css": "/github-jobs/static/media/backgroundImg.c8427568.png",
     "static/media/chevron_left.79c0cebb.svg": "/github-jobs/static/media/chevron_left.79c0cebb.svg",
@@ -21,7 +21,7 @@
   "entrypoints": [
     "static/js/runtime-main.0d363675.js",
     "static/js/2.a174df73.chunk.js",
-    "static/css/main.878dbc04.chunk.css",
+    "static/css/main.51aa452b.chunk.css",
     "static/js/main.11816a71.chunk.js"
   ]
 }
