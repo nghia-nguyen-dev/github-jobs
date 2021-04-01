@@ -3,6 +3,7 @@ import { useSelector } from "react-redux";
 import * as R from "ramda";
 import { filterByType, filterByLocation } from "utils/helpers";
 import config from "utils/config";
+import BeatLoader from "react-spinners/BeatLoader";
 
 const JobsList = () => {
 	const jobs = useSelector(state => state.jobs);
@@ -22,7 +23,22 @@ const JobsList = () => {
 	});
 
 	return (
-		<ul className="JobsList">{isLoading ? "Loading..." : renderedList}</ul>
+		<ul className="JobsList">
+			<BeatLoader
+				margin={4}
+				size={20}
+				loading={isLoading}
+				color={"#1e86ff"}
+				css={{
+					display: "block",
+					margin: "0 auto",
+					width: "max-content",
+					height: "698px",
+					paddingTop: "50%",
+				}}
+			/>
+			{renderedList}
+		</ul>
 	);
 };
 
