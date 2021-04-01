@@ -10,6 +10,7 @@ const PageNav = () => {
 	const jobs = useSelector(state => state.jobs);
 	const currentPage = useSelector(state => state.currentPage);
 	const pages = range(0, jobs.length / config.jobsPerPage);
+	const isLoading = useSelector(state => state.isLoading);
 
 	const handleNext = () => {
 		if (currentPage === pages.length - 1) {
@@ -45,17 +46,21 @@ const PageNav = () => {
 
 	return (
 		<div className="PageNav">
-			<img
-				src={chevronLeft}
-				className="PageNav__icon"
-				onClick={handlePrev}
-			/>
-			{PageBlocks}
-			<img
-				src={chevronRight}
-				className="PageNav__icon"
-				onClick={handleNext}
-			/>
+			{!isLoading && (
+				<>
+					<img
+						src={chevronLeft}
+						className="PageNav__icon"
+						onClick={handlePrev}
+					/>
+					{PageBlocks}
+					<img
+						src={chevronRight}
+						className="PageNav__icon"
+						onClick={handleNext}
+					/>
+				</>
+			)}
 		</div>
 	);
 };
