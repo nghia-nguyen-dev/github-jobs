@@ -6,6 +6,7 @@ const init = {
 	jobs: [],
 	selectedJob: {},
 	currentPage: 0,
+	isLoading: false,
 };
 
 // REDUCER
@@ -58,6 +59,12 @@ const reducer = (state = init, action) => {
 			return {
 				...state,
 				currentPage: action.num,
+			};
+
+		case "TOGGLE_LOADING":
+			return {
+				...state,
+				isLoading: !state.isLoading,
 			};
 
 		default:

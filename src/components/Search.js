@@ -1,7 +1,7 @@
 import { useState } from "react";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import workIcon from "assets/icons/work.svg";
-import { loadJobs } from "store/actions";
+import { loadJobs, toggleLoading } from "store/actions";
 import { useEffect } from "react";
 
 const Search = () => {
@@ -9,6 +9,7 @@ const Search = () => {
 	const dispatch = useDispatch();
 
 	const fetchData = (searchDescription = "") => {
+		dispatch(toggleLoading());
 		fetch(
 			`https://api.allorigins.win/get?url=https://jobs.github.com/positions.json?search=${searchDescription}`
 		)
@@ -16,17 +17,11 @@ const Search = () => {
 			.then(data => JSON.parse(data.contents))
 			.then(jobs => {
 				dispatch(loadJobs(jobs));
-
-				// console.log(addPages);
-				// // dispatch(addPages(R.splitEvery(config.jobsPerPage)(jobs)))
-				// R.pipe(
-				// 	R.splitEvery(config.jobsPerPage),
-				// 	addPages,
-				// 	dispatch
-				// )(jobs)
+				dispatch(toggleLoading());
 			})
 			.catch(err => {
 				console.log(err);
+				dispatch(toggleLoading());
 			});
 	};
 

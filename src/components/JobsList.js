@@ -9,6 +9,7 @@ const JobsList = () => {
 	const isFullTime = useSelector(state => state.filters.isFullTime);
 	const location = useSelector(state => state.filters.location);
 	const currentPage = useSelector(state => state.currentPage);
+	const isLoading = useSelector(state => state.isLoading);
 
 	const pages = R.pipe(
 		filterByType(isFullTime),
@@ -20,7 +21,9 @@ const JobsList = () => {
 		return <JobCard key={job.id} job={job} />;
 	});
 
-	return <ul className="JobsList">{renderedList}</ul>;
+	return (
+		<ul className="JobsList">{isLoading ? "Loading..." : renderedList}</ul>
+	);
 };
 
 export default JobsList;
